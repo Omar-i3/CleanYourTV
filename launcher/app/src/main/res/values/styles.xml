@@ -9,28 +9,28 @@
     <!-- Frosted pill, tvOS style. -->
     <style name="TopButtonBase">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">44dp</item>
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:paddingStart">18dp</item>
-        <item name="android:paddingEnd">20dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_marginStart">7dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/pill_bg</item>
         <item name="android:textColor">@drawable/pill_text</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">13.5sp</item>
         <item name="android:fontFamily">@font/thmanyah_medium</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:drawablePadding">9dp</item>
+        <item name="android:drawablePadding">6dp</item>
         <item name="android:drawableTint">@drawable/pill_text</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
     </style>
     <style name="TopButton" parent="TopButtonBase" />
 
-    <!-- Icon-only pill: a 44dp circle with the 22dp icon centred by even padding. -->
+    <!-- Icon-only pill: a 38dp circle with the 20dp icon centred by even padding. -->
     <style name="TopButtonIcon" parent="TopButtonBase">
-        <item name="android:layout_width">44dp</item>
-        <item name="android:paddingStart">11dp</item>
-        <item name="android:paddingEnd">11dp</item>
+        <item name="android:layout_width">38dp</item>
+        <item name="android:paddingStart">9dp</item>
+        <item name="android:paddingEnd">9dp</item>
         <item name="android:drawablePadding">0dp</item>
     </style>
 

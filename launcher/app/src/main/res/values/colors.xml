@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- UrTV Signature Palette (Saudi Royal Gold & Desert Sand on Deep Night) -->
+    <color name="sand">#F6EFE0</color>
+    <color name="dim">#C3B8A2</color>
+    <color name="dim_sand">#A89F88</color>
+    <color name="gold">#DCB86F</color>
+    <color name="gold_2">#D6AF6B</color>
+    <color name="gold_3">#E0BA74</color>
+    <color name="gold_hi">#FFE9B8</color>
+    <color name="gold_stroke">#38DCB86F</color>
+    <color name="gold_stroke_bright">#80DCB86F</color>
+    <color name="gold_glow">#4DDCB86F</color>
+    <color name="bg_night">#040E09</color>
+    <color name="panel_glass">#B3040E09</color>
+    <color name="panel_glass_focused">#E6040E09</color>
+    <color name="prayer_past">#8F8670</color>
+    <color name="saudi_green">#34B872</color>
+    <color name="saudi_green_light">#57D294</color>
+</resources>
+

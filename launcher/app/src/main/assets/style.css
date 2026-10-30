@@ -1,53 +1,56 @@
-/* ══════════════════════════════════════════════════════════
-   KAI SCREENSAVER — UI/UX REDESIGN v2.0
-   Premium TV Dashboard with Al-Hilal Theme
-   ══════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   URTV SAUDI ROYAL GOLD & DESERT NIGHT THEME
+   Inspired by UrTV (tshi-dev/UrTV)
+   ========================================================================== */
 
-/* ─── خطوط ثمانية الفاخرة ─── */
+/* Thmanyah Sans Font Family */
 @font-face { font-family: 'ThmanyahSans'; src: url('fonts/ThmanyahSans-Light.otf') format('opentype'), url('fonts/thmanyah_light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: block; }
 @font-face { font-family: 'ThmanyahSans'; src: url('fonts/ThmanyahSans-Regular.otf') format('opentype'), url('fonts/thmanyah_regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: block; }
 @font-face { font-family: 'ThmanyahSans'; src: url('fonts/ThmanyahSans-Medium.otf') format('opentype'), url('fonts/thmanyah_medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: block; }
 @font-face { font-family: 'ThmanyahSans'; src: url('fonts/ThmanyahSans-Bold.otf') format('opentype'), url('fonts/thmanyah_bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: block; }
 @font-face { font-family: 'ThmanyahSans'; src: url('fonts/ThmanyahSans-Black.otf') format('opentype'), url('fonts/thmanyah_black.otf') format('opentype'); font-weight: 900; font-style: normal; font-display: block; }
 
-/* ─── خط دبي التلفزيوني ─── */
+/* Fallback Dubai Font */
 @font-face { font-family: 'DubaiFont'; src: url('fonts/dubai_light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: block; }
 @font-face { font-family: 'DubaiFont'; src: url('fonts/dubai_regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: block; }
 @font-face { font-family: 'DubaiFont'; src: url('fonts/dubai_medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: block; }
 @font-face { font-family: 'DubaiFont'; src: url('fonts/dubai_bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: block; }
-
-/* توافق متبادل */
 @font-face { font-family: 'Dubai'; src: url('fonts/dubai_regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: block; }
 @font-face { font-family: 'Dubai'; src: url('fonts/dubai_bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: block; }
 
 :root {
-  /* التكيّف مع شاشات 16:9 */
   --px: min(100vw / 1280, 100vh / 720);
 
-  /* طبقة ألوان النصوص */
-  --ink: #F8FAFC;
-  --ink-2: rgba(248, 250, 252, 0.85);
-  --ink-3: rgba(148, 163, 184, 0.9);
-  --line: rgba(255, 255, 255, 0.1);
+  /* UrTV Desert Sand & Royal Gold Palette */
+  --sand: #F6EFE0;
+  --dim: #C3B8A2;
+  --dim-2: #9FB8A8;
+  --gold: #DCB86F;
+  --gold-2: #D6AF6B;
+  --gold-3: #E0BA74;
+  --gold-hi: #FFE9B8;
+  --gold-rgb: 220, 184, 111;
+  --saudi-green: #34B872;
+  --green-lt: #57D294;
+  --red: #EE6A50;
+  --bg-deep: #040E09;
 
-  /* ثيم الهلال الملكي */
-  --hilal-blue: #0066FF;
-  --hilal-cyan: #38BDF8;
-  --hilal-deep: #1E40AF;
-  --gold: #FBBF24;
-  --gold-soft: rgba(251, 191, 36, 0.15);
+  --ink: #F6EFE0;
+  --ink-2: #C3B8A2;
+  --ink-3: #9FB8A8;
+  --line: rgba(220, 184, 111, 0.18);
 
-  /* بطاقات زجاجية */
-  --glass-bg: rgba(15, 23, 42, 0.55);
-  --glass-border: rgba(148, 163, 184, 0.12);
-  --glass-blur: 20px;
+  /* UrTV Signature Glass Panels */
+  --glass-bg: rgba(4, 14, 9, 0.72);
+  --glass-border: rgba(220, 184, 111, 0.22);
+  --glass-blur: 0px;
 
-  /* ظلال */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 0 40px rgba(0, 102, 255, 0.15);
+  /* Shadows & Glow */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 35px rgba(220, 184, 111, 0.22);
 
-  --font-arabic: 'ThmanyahSans', 'Dubai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-arabic: 'ThmanyahSans', 'DubaiFont', 'Dubai', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,7 +58,7 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #030712;
+  background: var(--bg-deep);
   color: var(--ink);
   font-family: var(--font-arabic);
   font-synthesis: none;
@@ -65,16 +68,16 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ═══════════════ خلفية الشاشة ═══════════════ */
+/* UrTV Stage Background */
 .stage {
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 70% 60% at 75% 15%, rgba(0, 102, 255, 0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(30, 64, 175, 0.25) 0%, transparent 60%),
-    radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 80%),
-    linear-gradient(160deg, #0F172A 0%, #0A0F1F 40%, #030712 100%);
+    radial-gradient(ellipse 70% 60% at 75% 15%, rgba(220, 184, 111, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(4, 14, 9, 0.85) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(4, 14, 9, 0.9) 0%, transparent 80%),
+    linear-gradient(160deg, #07150E 0%, #040E09 50%, #020704 100%);
 }
 
 .bg-layer {
@@ -95,8 +98,8 @@ html, body {
   z-index: 2;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 25%, rgba(0, 102, 255, 0.08), transparent 70%),
-    radial-gradient(ellipse 40% 30% at 80% 70%, rgba(56, 189, 248, 0.05), transparent 60%);
+    radial-gradient(ellipse 80% 50% at 50% 25%, rgba(220, 184, 111, 0.06), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 70%, rgba(52, 184, 114, 0.04), transparent 60%);
 }
 
 .shade {
@@ -105,50 +108,73 @@ html, body {
   z-index: 3;
   pointer-events: none;
   background: linear-gradient(180deg,
-    rgba(3, 7, 18, 0.45) 0%,
-    rgba(3, 7, 18, 0.05) 30%,
-    rgba(3, 7, 18, 0) 45%,
-    rgba(3, 7, 18, 0.55) 75%,
-    rgba(3, 7, 18, 0.9) 100%);
+    rgba(4, 14, 9, 0.6) 0%,
+    rgba(4, 14, 9, 0.15) 30%,
+    rgba(4, 14, 9, 0.05) 45%,
+    rgba(4, 14, 9, 0.65) 75%,
+    rgba(4, 14, 9, 0.95) 100%);
 }
 
-/* حركة حماية الشاشة */
+.bg-dim-overlay {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: rgba(4, 14, 9, 0.4);
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
 .drift {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: 4;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  animation: fadeIn 1s ease both, nudge 600s steps(1, end) infinite;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  animation: drift 90s ease-in-out infinite alternate;
 }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes nudge {
+@keyframes drift {
   0%   { transform: translate(0, 0); }
-  25%  { transform: translate(3px, -2px); }
-  50%  { transform: translate(-3px, 2px); }
-  75%  { transform: translate(2px, 3px); }
-  100% { transform: translate(0, 0); }
+  25%  { transform: translate(calc(var(--px) * 4), calc(var(--px) * -3)); }
+  50%  { transform: translate(calc(var(--px) * -3), calc(var(--px) * 2)); }
+  75%  { transform: translate(calc(var(--px) * 2), calc(var(--px) * 3)); }
+  100% { transform: translate(calc(var(--px) * -2), calc(var(--px) * -2)); }
 }
 
-/* ═══════════════ النصوص المشتركة ═══════════════ */
-.label {
-  font-size: calc(var(--px) * 14);
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--ink-3);
-  letter-spacing: 0.2px;
+/* UrTV Prayer Alert Banner */
+.prayer-alert-banner {
+  position: absolute;
+  top: calc(var(--px) * 16);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--px) * 14);
+  background: rgba(4, 14, 9, 0.92);
+  border: 1px solid var(--gold);
+  border-radius: calc(var(--px) * 14);
+  padding: calc(var(--px) * 10) calc(var(--px) * 28);
+  box-shadow: 0 4px 24px rgba(220, 184, 111, 0.35);
+  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.sep {
-  margin: 0 calc(var(--px) * 8);
-  color: rgba(56, 189, 248, 0.5);
+@keyframes slideDown {
+  from { opacity: 0; transform: translate(-50%, calc(var(--px) * -20)); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
 }
-.sub {
-  font-size: calc(var(--px) * 14);
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--ink-2);
+.alert-icon { font-size: calc(var(--px) * 26); }
+.alert-title {
+  font-size: calc(var(--px) * 16);
+  font-weight: 700;
+  color: var(--gold-hi);
+}
+.alert-desc {
+  font-size: calc(var(--px) * 13);
+  color: var(--dim);
 }
 
-/* ═══════════════ التاريخ — يمين فوق ═══════════════ */
+/* ==========================================================================
+   TOP RIGHT: DATE & GREETING (UrTV Style)
+   ========================================================================== */
 .when {
   position: absolute;
   right: calc(var(--px) * 60);
@@ -156,69 +182,93 @@ html, body {
   text-align: right;
 }
 .weekday {
-  font-size: calc(var(--px) * 28);
+  font-size: calc(var(--px) * 24);
   font-weight: 700;
-  line-height: 1.3;
-  color: var(--ink);
-  letter-spacing: -0.3px;
+  line-height: 1.1;
+  color: var(--sand);
+  letter-spacing: -0.01em;
 }
 .dates {
-  margin-top: calc(var(--px) * 4);
   font-size: calc(var(--px) * 14);
-  font-weight: 400;
-  line-height: 1.5;
-  color: var(--ink-3);
+  font-weight: 500;
+  color: var(--dim);
+  margin-top: calc(var(--px) * 5);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--px) * 8);
+}
+.dates::after {
+  content: '';
+  width: calc(var(--px) * 80);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(var(--gold-rgb), 0.5), transparent);
+  margin-inline-start: calc(var(--px) * 8);
 }
 
-/* ═══════════════ الساعة الكبرى ═══════════════ */
+/* ==========================================================================
+   CENTER RIGHT: CLOCK (UrTV AM/PM + Large Sand Digits)
+   ========================================================================== */
 .clock {
   position: absolute;
   right: calc(var(--px) * 60);
-  top: calc(var(--px) * 130);
+  top: calc(var(--px) * 115);
   display: flex;
-  flex-direction: row;
   align-items: baseline;
-  direction: rtl;
-  font-size: calc(var(--px) * 220);
-  font-weight: 600;
-  line-height: 0.9;
-  white-space: nowrap;
-  text-shadow:
-    0 0 80px rgba(0, 102, 255, 0.25),
-    0 4px 20px rgba(0, 0, 0, 0.4);
-  letter-spacing: -3px;
-  color: #FFFFFF;
+  direction: ltr;
 }
 .clock .time {
-  display: inline-flex;
-  direction: ltr;
-  unicode-bidi: isolate;
+  font-size: calc(var(--px) * 110);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--sand);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
 }
 .clock .colon {
-  color: var(--hilal-cyan);
-  font-weight: 300;
-  animation: blink 2s ease-in-out infinite;
-  margin: 0 calc(var(--px) * 3);
-  opacity: 0.9;
+  display: inline-block;
+  margin: 0 calc(var(--px) * 2);
+  color: var(--gold);
+  animation: blink 2s infinite;
 }
 @keyframes blink {
-  0%, 100% { opacity: 0.9; }
-  50% { opacity: 0.15; }
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 0.2; }
 }
 .clock .period {
   margin-inline-start: calc(var(--px) * 14);
-  font-size: calc(var(--px) * 28);
+  font-size: calc(var(--px) * 22);
   font-weight: 600;
-  color: var(--hilal-cyan);
-  opacity: 0.8;
+  color: var(--gold-2);
+  background: rgba(var(--gold-rgb), 0.12);
+  border: 1px solid rgba(var(--gold-rgb), 0.3);
+  padding: calc(var(--px) * 3) calc(var(--px) * 12);
+  border-radius: calc(var(--px) * 8);
 }
 
-/* ═══════════════ الطقس — يسار فوق ═══════════════ */
+/* ==========================================================================
+   TOP LEFT: WEATHER (UrTV Style)
+   ========================================================================== */
 .weather {
   position: absolute;
   left: calc(var(--px) * 60);
   top: calc(var(--px) * 42);
-  width: calc(var(--px) * 400);
+  width: calc(var(--px) * 380);
+}
+.weather .label {
+  font-size: calc(var(--px) * 12);
+  font-weight: 500;
+  color: var(--gold-2);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--px) * 6);
+}
+.weather .label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(270deg, rgba(var(--gold-rgb), 0.5), transparent);
 }
 .weather-now {
   display: flex;
@@ -227,27 +277,29 @@ html, body {
   gap: calc(var(--px) * 4);
 }
 .weather-temp {
-  font-size: calc(var(--px) * 52);
+  font-size: calc(var(--px) * 48);
   font-weight: 700;
   line-height: 1;
-  color: var(--ink);
+  color: var(--gold-hi);
+  font-variant-numeric: tabular-nums;
 }
 .wicon { display: block; width: calc(var(--px) * 28); height: calc(var(--px) * 28); }
 .wicon-now {
-  width: calc(var(--px) * 42);
-  height: calc(var(--px) * 42);
-  margin: 0 calc(var(--px) * 10);
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+  width: calc(var(--px) * 38);
+  height: calc(var(--px) * 38);
+  margin: 0 calc(var(--px) * 8);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  stroke: var(--gold-3);
 }
 .weather-desc {
-  font-size: calc(var(--px) * 16);
+  font-size: calc(var(--px) * 15);
   font-weight: 500;
-  color: var(--ink-2);
+  color: var(--dim);
 }
 .forecast {
   display: flex;
   justify-content: space-between;
-  margin-top: calc(var(--px) * 14);
+  margin-top: calc(var(--px) * 12);
   gap: calc(var(--px) * 6);
 }
 .fday {
@@ -256,92 +308,134 @@ html, body {
   align-items: center;
   min-width: 0;
   flex: 1 1 0;
-  font-size: calc(var(--px) * 12);
-  color: var(--ink-3);
+  font-size: calc(var(--px) * 11);
+  color: var(--dim-2);
 }
-.fday .wicon { margin: calc(var(--px) * 3) 0; width: calc(var(--px) * 20); height: calc(var(--px) * 20); opacity: 0.85; }
-.fday .hi { font-size: calc(var(--px) * 14); font-weight: 700; color: var(--ink); }
-.fday .lo { font-size: calc(var(--px) * 12); color: var(--ink-3); }
+.fday .wicon { margin: calc(var(--px) * 3) 0; width: calc(var(--px) * 18); height: calc(var(--px) * 18); opacity: 0.85; stroke: var(--gold); }
+.fday .hi { font-size: calc(var(--px) * 13); font-weight: 700; color: var(--sand); }
+.fday .lo { font-size: calc(var(--px) * 11); color: var(--dim); }
 
-/* ═══════════════ حديث اليوم — بطاقة زجاجية ═══════════════ */
+/* ==========================================================================
+   MIDDLE LEFT: HADITH OF THE DAY (UrTV Panel Aesthetic)
+   ========================================================================== */
 .hadith-box {
   position: absolute;
   left: calc(var(--px) * 60);
-  top: calc(var(--px) * 220);
-  width: calc(var(--px) * 420);
+  top: calc(var(--px) * 205);
+  width: calc(var(--px) * 440);
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
-  border-radius: calc(var(--px) * 18);
-  padding: calc(var(--px) * 18) calc(var(--px) * 22);
+  border-radius: calc(var(--px) * 14);
+  padding: calc(var(--px) * 16) calc(var(--px) * 20);
   box-shadow: var(--shadow-md);
   animation: fadeIn 1.2s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(calc(var(--px) * 10)); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .hadith-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: calc(var(--px) * 10);
-  padding-bottom: calc(var(--px) * 8);
-  border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+  margin-bottom: calc(var(--px) * 8);
+  padding-bottom: calc(var(--px) * 6);
+  border-bottom: 1px solid rgba(var(--gold-rgb), 0.16);
 }
 .hadith-tag {
-  font-size: calc(var(--px) * 13);
+  font-size: calc(var(--px) * 12);
   font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.3px;
+  color: var(--gold-hi);
+  background: rgba(var(--gold-rgb), 0.18);
+  border: 1px solid rgba(var(--gold-rgb), 0.35);
+  padding: calc(var(--px) * 2) calc(var(--px) * 10);
+  border-radius: calc(var(--px) * 6);
+  letter-spacing: 0.02em;
 }
 .hadith-source {
-  font-size: calc(var(--px) * 11);
-  color: var(--ink-3);
-  background: rgba(148, 163, 184, 0.08);
-  padding: calc(var(--px) * 2) calc(var(--px) * 8);
-  border-radius: calc(var(--px) * 6);
+  font-size: calc(var(--px) * 12);
+  color: var(--dim);
 }
 .hadith-text {
-  font-size: calc(var(--px) * 15);
-  font-weight: 500;
-  line-height: 1.75;
-  color: var(--ink);
+  font-size: calc(var(--px) * 14.5);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--sand);
 }
 
-/* ═══════════════ الصف السفلي — ثلاثة أعمدة ═══════════════ */
+/* ==========================================================================
+   BOTTOM PANELS: PRAYER + RAMADAN + MATCHES (UrTV .week Cards)
+   ========================================================================== */
 .info {
   position: absolute;
   left: calc(var(--px) * 60);
   right: calc(var(--px) * 60);
-  bottom: calc(var(--px) * 56);
+  bottom: calc(var(--px) * 48);
   display: grid;
-  grid-template-columns: 1.45fr 0.65fr 1.15fr;
-  gap: calc(var(--px) * 16);
-  align-items: end;
+  grid-template-columns: 1.55fr 0.65fr 1.15fr;
+  gap: calc(var(--px) * 14);
+  align-items: stretch;
 }
 
 .col {
   min-width: 0;
-  padding: calc(var(--px) * 10) calc(var(--px) * 20);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--px) * 14);
+  padding: calc(var(--px) * 14) calc(var(--px) * 18);
+  box-shadow: var(--shadow-md);
   position: relative;
 }
-.col:first-child { padding-inline-start: 0; }
-.col:last-child  { padding-inline-end: 0; }
-.col + .col::before {
+
+.label {
+  font-size: calc(var(--px) * 12.5);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--gold-2);
+  margin-bottom: calc(var(--px) * 6);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--px) * 8);
+}
+.label::after {
   content: '';
-  position: absolute;
-  right: 0;
-  top: 10%;
-  bottom: 10%;
-  width: 1px;
-  background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.15) 30%, rgba(56, 189, 248, 0.15) 70%, transparent 100%);
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(var(--gold-rgb), 0.5), transparent);
 }
 
-/* ─── شريط الصلوات الخمس ─── */
+.value {
+  margin-top: calc(var(--px) * 6);
+  font-size: calc(var(--px) * 32);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sand);
+}
+.value .small {
+  font-size: calc(var(--px) * 14);
+  color: var(--dim);
+  font-weight: 500;
+  margin-inline-start: calc(var(--px) * 6);
+}
+
+.sub {
+  font-size: calc(var(--px) * 12);
+  color: var(--dim);
+  margin-top: calc(var(--px) * 6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   URTV PRAYER CAPSULES ROW (.prow / .p-item with Iqamah Badge)
+   ========================================================================== */
 .prayers-bar {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: calc(var(--px) * 6);
-  margin-top: calc(var(--px) * 10);
-  margin-bottom: calc(var(--px) * 6);
+  margin-top: calc(var(--px) * 8);
+  margin-bottom: calc(var(--px) * 4);
 }
 
 .p-item {
@@ -349,114 +443,112 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--px) * 6) calc(var(--px) * 4);
+  padding: calc(var(--px) * 7) calc(var(--px) * 3);
   border-radius: calc(var(--px) * 10);
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.08);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(var(--gold-rgb), 0.18);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   min-width: 0;
   text-align: center;
 }
 
-.p-item.active {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.45) 0%, rgba(30, 64, 175, 0.6) 100%);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow:
-    0 0 calc(var(--px) * 20) rgba(0, 102, 255, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
 .p-name {
-  font-size: calc(var(--px) * 11);
-  font-weight: 600;
-  color: var(--ink-3);
-  margin-bottom: calc(var(--px) * 3);
+  font-size: calc(var(--px) * 11.5);
+  font-weight: 500;
+  color: var(--dim);
+  margin-bottom: calc(var(--px) * 2);
   white-space: nowrap;
-}
-
-.p-item.active .p-name {
-  color: var(--gold);
 }
 
 .p-azan {
-  font-size: calc(var(--px) * 14);
+  font-size: calc(var(--px) * 14.5);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--sand);
   line-height: 1.2;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
+/* Iqamah Pill inside Prayer Slot */
 .p-iqamah {
-  font-size: calc(var(--px) * 10);
+  font-size: calc(var(--px) * 9.5);
   font-weight: 500;
-  color: var(--hilal-cyan);
-  margin-top: calc(var(--px) * 3);
+  color: var(--gold);
+  background: rgba(var(--gold-rgb), 0.14);
+  border: 0.8px solid rgba(var(--gold-rgb), 0.28);
+  border-radius: calc(var(--px) * 5);
+  padding: calc(var(--px) * 1.5) calc(var(--px) * 5);
+  margin-top: calc(var(--px) * 4);
   white-space: nowrap;
-  opacity: 0.8;
+  font-variant-numeric: tabular-nums;
 }
 
-.p-item.active .p-iqamah {
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 600;
-  opacity: 1;
+/* Active / Next Prayer Highlight */
+.p-item.active {
+  background: rgba(var(--gold-rgb), 0.22);
+  border-color: rgba(var(--gold-rgb), 0.7);
+  box-shadow:
+    0 0 calc(var(--px) * 18) rgba(var(--gold-rgb), 0.28),
+    inset 0 0 calc(var(--px) * 8) rgba(var(--gold-rgb), 0.15);
 }
-
-.value {
-  margin-top: calc(var(--px) * 8);
-  font-size: calc(var(--px) * 36);
+.p-item.active .p-name {
+  color: var(--gold-hi);
   font-weight: 700;
-  line-height: 1.3;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--ink);
 }
-.value .small {
-  margin-inline-start: calc(var(--px) * 8);
-  font-size: calc(var(--px) * 20);
-  font-weight: 500;
-  color: var(--hilal-cyan);
-  opacity: 0.8;
+.p-item.active .p-azan {
+  color: #FFFFFF;
+  text-shadow: 0 0 calc(var(--px) * 10) rgba(var(--gold-rgb), 0.5);
 }
-.value .vs {
-  color: var(--hilal-cyan);
-  font-weight: 400;
-  margin: 0 calc(var(--px) * 8);
-}
-.col .sub {
-  margin-top: calc(var(--px) * 6);
-  min-height: calc(var(--px) * 22);
-  line-height: 1.5;
+.p-item.active .p-iqamah {
+  color: var(--gold-hi);
+  background: rgba(var(--gold-rgb), 0.4);
+  border-color: var(--gold);
+  font-weight: 700;
 }
 
-/* ═══════════════ عمود المباريات ═══════════════ */
-.col-match .label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: calc(var(--px) * 6);
-}
-
+/* ==========================================================================
+   MATCHES & SPORTS (UrTV Style)
+   ========================================================================== */
 .comp-badge {
   display: inline-block;
-  font-size: calc(var(--px) * 10);
-  font-weight: 700;
-  color: var(--hilal-cyan);
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  padding: calc(var(--px) * 2) calc(var(--px) * 8);
-  border-radius: calc(var(--px) * 12);
-  letter-spacing: 0.2px;
+  font-size: calc(var(--px) * 10.5);
+  font-weight: 600;
+  color: var(--gold-hi);
+  background: rgba(var(--gold-rgb), 0.18);
+  border: 1px solid rgba(var(--gold-rgb), 0.35);
+  padding: calc(var(--px) * 1.5) calc(var(--px) * 8);
+  border-radius: calc(var(--px) * 6);
+  margin-inline-start: calc(var(--px) * 6);
 }
 .comp-badge:empty { display: none; }
 
-.match-fixture-value {
-  display: flex;
-  align-items: center;
-}
-.match-fixture-value .team-name {
-  color: var(--ink);
+.matchday-badge {
+  display: inline-block;
+  font-size: calc(var(--px) * 10.5);
   font-weight: 700;
+  color: var(--saudi-green);
+  background: rgba(52, 184, 114, 0.15);
+  border: 1px solid rgba(52, 184, 114, 0.35);
+  padding: calc(var(--px) * 1.5) calc(var(--px) * 8);
+  border-radius: calc(var(--px) * 6);
+  margin-inline-start: calc(var(--px) * 6);
+}
+
+.match-live-pulse {
+  display: inline-block;
+  font-size: calc(var(--px) * 10.5);
+  font-weight: 700;
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: calc(var(--px) * 1.5) calc(var(--px) * 8);
+  border-radius: calc(var(--px) * 6);
+  margin-inline-start: calc(var(--px) * 6);
+  animation: pulseLive 1.5s infinite;
+}
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .vs-badge {
@@ -465,406 +557,73 @@ html, body {
   justify-content: center;
   font-size: calc(var(--px) * 11);
   font-weight: 700;
-  color: var(--hilal-cyan);
-  background: rgba(0, 102, 255, 0.25);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--gold-3);
+  background: rgba(var(--gold-rgb), 0.16);
+  border: 1px solid rgba(var(--gold-rgb), 0.3);
   padding: calc(var(--px) * 2) calc(var(--px) * 8);
-  border-radius: calc(var(--px) * 8);
+  border-radius: calc(var(--px) * 6);
   margin: 0 calc(var(--px) * 8);
-  line-height: 1;
-  letter-spacing: 0.3px;
 }
 
-/* شارة الملعب */
 .venue-badge {
   display: inline-flex;
   align-items: center;
   gap: calc(var(--px) * 4);
-  font-size: calc(var(--px) * 12);
+  font-size: calc(var(--px) * 11.5);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(148, 163, 184, 0.12);
+  color: var(--sand);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(var(--gold-rgb), 0.16);
   padding: calc(var(--px) * 2) calc(var(--px) * 8);
-  border-radius: calc(var(--px) * 8);
+  border-radius: calc(var(--px) * 6);
   margin: 0 calc(var(--px) * 4);
 }
 
 .match-next-line {
-  margin-top: calc(var(--px) * 6);
-  font-size: calc(var(--px) * 12);
-  color: var(--ink-3);
+  margin-top: calc(var(--px) * 5);
+  font-size: calc(var(--px) * 11.5);
+  color: var(--dim);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.4;
 }
 .match-next-line:empty { display: none; }
 
-.next-pill {
-  display: inline-block;
-  font-size: calc(var(--px) * 10);
-  font-weight: 700;
-  color: var(--gold);
-  background: var(--gold-soft);
-  border: 1px solid rgba(251, 191, 36, 0.25);
-  padding: calc(var(--px) * 1) calc(var(--px) * 6);
-  border-radius: calc(var(--px) * 6);
-  margin-inline-end: calc(var(--px) * 4);
-  vertical-align: middle;
-}
-
-/* ─── شارات Live ─── */
-.live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(var(--px) * 5);
-  color: #EF4444;
-  font-weight: 700;
-}
-.live-dot {
-  display: inline-block;
-  width: calc(var(--px) * 7);
-  height: calc(var(--px) * 7);
-  border-radius: 50%;
-  background: #EF4444;
-  animation: pulseDot 1.2s infinite;
-}
-@keyframes pulseDot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.8); opacity: 0.2; }
-}
-
-.score-box {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.45), rgba(30, 64, 175, 0.5));
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  padding: calc(var(--px) * 3) calc(var(--px) * 12);
-  border-radius: calc(var(--px) * 10);
-  color: #fff;
-  font-weight: 900;
-  margin: 0 calc(var(--px) * 6);
-  box-shadow: 0 2px 12px rgba(0, 102, 255, 0.2);
-}
-
-.match-goals {
-  margin-top: calc(var(--px) * 6);
-  font-size: calc(var(--px) * 13);
-  color: var(--gold);
-}
-
-/* ═══════════════ تنبيه الأذان والإقامة ═══════════════ */
-.prayer-alert-banner {
-  position: absolute;
-  top: calc(20 * var(--px));
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  gap: calc(14 * var(--px));
-  background: rgba(15, 23, 42, 0.9);
-  border: 1.5px solid rgba(56, 189, 248, 0.5);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 102, 255, 0.15);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  padding: calc(12 * var(--px)) calc(28 * var(--px));
-  border-radius: calc(16 * var(--px));
-  animation: slideDownBanner 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes slideDownBanner {
-  from { opacity: 0; transform: translate(-50%, -20px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-.alert-icon {
-  font-size: calc(24 * var(--px));
-  animation: pulseIcon 2s infinite ease-in-out;
-}
-
-@keyframes pulseIcon {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.12); }
-}
-
-.alert-content {
-  display: flex;
-  flex-direction: column;
-  gap: calc(2 * var(--px));
-}
-
-.alert-title {
-  font-size: calc(16 * var(--px));
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: -0.2px;
-}
-
-.alert-desc {
-  font-size: calc(12 * var(--px));
-  color: var(--ink-2);
-  font-weight: 400;
-}
-
-/* ═══════════════ شارات يوم المباراة ═══════════════ */
-.matchday-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(4 * var(--px));
-  margin-right: calc(6 * var(--px));
-  padding: calc(2 * var(--px)) calc(10 * var(--px));
-  background: linear-gradient(135deg, #F97316, #EA580C);
-  color: #FFF;
-  font-size: calc(10 * var(--px));
-  font-weight: 700;
-  border-radius: calc(8 * var(--px));
-  text-shadow: none;
-  animation: pulseGlow 2.5s infinite;
-  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
-}
-
-.match-live-pulse {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(4 * var(--px));
-  margin-right: calc(6 * var(--px));
-  padding: calc(2 * var(--px)) calc(10 * var(--px));
-  background: linear-gradient(135deg, #EF4444, #DC2626);
-  color: #FFF;
-  font-size: calc(10 * var(--px));
-  font-weight: 700;
-  border-radius: calc(8 * var(--px));
-  animation: liveBlink 1.2s infinite;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-}
-
-@keyframes liveBlink {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(1.03); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3); }
-  50% { box-shadow: 0 4px 20px rgba(249, 115, 22, 0.6); }
-}
-
-/* ═══════════════ شريط الأخبار التلفزيوني ═══════════════ */
+/* ==========================================================================
+   URTV NEWS TICKER
+   ========================================================================== */
 .news-ticker-bar {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: calc(42 * var(--px));
-  z-index: 100;
+  left: 0; right: 0; bottom: 0;
+  height: calc(var(--px) * 36);
+  background: rgba(4, 14, 9, 0.94);
+  border-top: 1px solid rgba(var(--gold-rgb), 0.28);
   display: flex;
   align-items: center;
-  gap: calc(14 * var(--px));
-  background: linear-gradient(90deg,
-    rgba(3, 7, 18, 0.97) 0%,
-    rgba(15, 23, 42, 0.95) 50%,
-    rgba(3, 7, 18, 0.97) 100%);
-  border-top: 1px solid rgba(56, 189, 248, 0.2);
-  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 0 calc(32 * var(--px));
-  transition: opacity 0.4s ease;
+  padding: 0 calc(var(--px) * 30);
+  z-index: 8;
 }
-
-.news-ticker-left {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
 .news-tag {
-  background: linear-gradient(135deg, #0066FF, #1E40AF);
-  color: #FFF;
-  font-size: calc(11 * var(--px));
+  font-size: calc(var(--px) * 12);
   font-weight: 700;
-  padding: calc(3 * var(--px)) calc(12 * var(--px));
-  border-radius: calc(8 * var(--px));
+  color: var(--gold-hi);
+  background: rgba(var(--gold-rgb), 0.2);
+  border: 1px solid rgba(var(--gold-rgb), 0.4);
+  padding: calc(var(--px) * 2) calc(var(--px) * 10);
+  border-radius: calc(var(--px) * 6);
   white-space: nowrap;
-  letter-spacing: 0.2px;
-  box-shadow: 0 2px 8px rgba(0, 102, 255, 0.25);
 }
-
-.news-ticker-center {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-}
-
 .news-headline {
   flex: 1;
-  font-size: calc(14 * var(--px));
-  font-weight: 500;
-  color: var(--ink);
+  font-size: calc(var(--px) * 13);
+  color: var(--sand);
+  margin: 0 calc(var(--px) * 16);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: -0.1px;
 }
-
-.news-ticker-right {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
 .news-source {
-  font-size: calc(11 * var(--px));
-  color: var(--ink-3);
-  background: rgba(148, 163, 184, 0.08);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  padding: calc(2 * var(--px)) calc(8 * var(--px));
-  border-radius: calc(6 * var(--px));
-  font-weight: 500;
+  font-size: calc(var(--px) * 11);
+  color: var(--dim);
   white-space: nowrap;
-}
-
-/* ═══════════════ العرض المزدوج للمباريات ═══════════════ */
-.dual-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: calc(6 * var(--px));
-}
-
-.dual-label {
-  font-size: calc(12 * var(--px));
-  font-weight: 600;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.dual-badge {
-  font-size: calc(10 * var(--px));
-  font-weight: 700;
-  color: var(--hilal-cyan);
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  padding: calc(2 * var(--px)) calc(8 * var(--px));
-  border-radius: calc(10 * var(--px));
-}
-
-.dual-cards {
-  display: flex;
-  flex-direction: column;
-  gap: calc(6 * var(--px));
-}
-
-.dual-card-row {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: calc(10 * var(--px));
-  padding: calc(6 * var(--px)) calc(12 * var(--px));
-  display: flex;
-  flex-direction: column;
-  gap: calc(3 * var(--px));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: border-color 0.3s ease;
-}
-
-.dual-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.dual-card-club {
-  font-size: calc(11 * var(--px));
-  font-weight: 700;
-  color: var(--hilal-cyan);
-}
-
-.dual-card-comp {
-  font-size: calc(10 * var(--px));
-  color: var(--ink-3);
-}
-
-.dual-card-fixture {
-  display: flex;
-  align-items: center;
-  gap: calc(6 * var(--px));
-  font-size: calc(14 * var(--px));
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.dual-card-fixture .vs-mini {
-  font-size: calc(10 * var(--px));
-  font-weight: 700;
-  color: var(--hilal-cyan);
-  background: rgba(0, 102, 255, 0.25);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: calc(1 * var(--px)) calc(5 * var(--px));
-  border-radius: calc(5 * var(--px));
-}
-
-.dual-card-fixture .score-mini {
-  background: linear-gradient(135deg, rgba(0, 102, 255, 0.4), rgba(30, 64, 175, 0.5));
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  padding: calc(1 * var(--px)) calc(7 * var(--px));
-  border-radius: calc(5 * var(--px));
-  color: #FFF;
-  font-weight: 800;
-  font-size: calc(12 * var(--px));
-}
-
-.dual-card-sub {
-  font-size: calc(11 * var(--px));
-  color: var(--ink-3);
-  display: flex;
-  align-items: center;
-  gap: calc(6 * var(--px));
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* بادج تمييز النادي */
-.club-badge {
-  display: inline-block;
-  margin-left: calc(6 * var(--px));
-  padding: calc(2 * var(--px)) calc(8 * var(--px));
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  color: var(--hilal-cyan);
-  font-size: calc(11 * var(--px));
-  font-weight: 700;
-  border-radius: calc(8 * var(--px));
-}
-
-/* طبقة التعتيم */
-.bg-dim-overlay {
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-  transition: background-color 0.5s ease;
-  z-index: 1;
-}
-
-/* بنر الترحيب */
-.greeting-banner {
-  font-size: calc(15 * var(--px));
-  font-weight: 600;
-  color: var(--gold);
-  margin-bottom: calc(4 * var(--px));
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-  letter-spacing: 0.2px;
-  opacity: 0.9;
-}
-
-/* ثواني الساعة */
-.clock-seconds {
-  font-size: calc(34 * var(--px));
-  opacity: 0.6;
-  color: var(--hilal-cyan);
-  margin-right: calc(4 * var(--px));
-  font-weight: 400;
 }

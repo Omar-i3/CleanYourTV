@@ -1745,10 +1745,35 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     private void highlightPrayerSlot(boolean active, View slot) {
         if (slot == null) return;
-        if (active) {
-            slot.setBackgroundResource(R.drawable.prayer_active_bg);
-        } else {
-            slot.setBackgroundResource(R.drawable.prayer_normal_bg);
+        if (slot instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) slot;
+            if (active) {
+                vg.setBackgroundResource(R.drawable.prayer_active_bg);
+                if (vg.getChildCount() >= 3) {
+                    View v0 = vg.getChildAt(0);
+                    View v1 = vg.getChildAt(1);
+                    View v2 = vg.getChildAt(2);
+                    if (v0 instanceof TextView) ((TextView) v0).setTextColor(0xFFFFE9B8);
+                    if (v1 instanceof TextView) ((TextView) v1).setTextColor(0xFFFFFFFF);
+                    if (v2 instanceof TextView) {
+                        v2.setBackgroundResource(R.drawable.badge_iqamah_active_bg);
+                        ((TextView) v2).setTextColor(0xFFFFE9B8);
+                    }
+                }
+            } else {
+                vg.setBackgroundResource(R.drawable.prayer_normal_bg);
+                if (vg.getChildCount() >= 3) {
+                    View v0 = vg.getChildAt(0);
+                    View v1 = vg.getChildAt(1);
+                    View v2 = vg.getChildAt(2);
+                    if (v0 instanceof TextView) ((TextView) v0).setTextColor(0xFFC3B8A2);
+                    if (v1 instanceof TextView) ((TextView) v1).setTextColor(0xFFF6EFE0);
+                    if (v2 instanceof TextView) {
+                        v2.setBackgroundResource(R.drawable.badge_iqamah_bg);
+                        ((TextView) v2).setTextColor(0xFFDCB86F);
+                    }
+                }
+            }
         }
     }
 
