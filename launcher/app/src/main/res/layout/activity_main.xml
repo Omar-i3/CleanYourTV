@@ -1,9 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF000000">
+    android:layoutDirection="ltr"
+    android:background="#FF070D18">
+
+    <!-- Scenic Wallpaper: Stunning AlUla Landscape (same as video zm7md1) -->
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/wallpaper_alula"
+        android:importantForAccessibility="no" />
+
+    <!-- Dark cinematic scrim overlay for maximum legibility of widgets and apps -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/scrim_overlay"
+        android:importantForAccessibility="no" />
 
     <!-- Time-of-day backdrop, drawn once a minute (config.xml sky_intensity; 0 keeps it hidden). -->
     <com.gathin.tvhome.SkyView
@@ -19,16 +35,18 @@
         android:layout_height="match_parent"
         android:alpha="0" />
 
-    <!-- Top shelf: the focused dock app's name, positioned above the dock in code. -->
+    <!-- Top shelf: the focused dock app's name, anchored on the LEFT above the dock (exactly like video zm7md1). -->
     <TextView
         android:id="@+id/heroName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
+        android:layout_gravity="left|start"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
         android:alpha="0"
         android:textColor="#FFFFFFFF"
-        android:textSize="48sp"
-        android:fontFamily="@font/outfit_light"
+        android:textSize="44sp"
+        android:fontFamily="@font/thmanyah_medium"
         android:letterSpacing="-0.02"
         android:includeFontPadding="false"
         android:singleLine="true" />
@@ -43,161 +61,44 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <!-- No clipping down to the pills: with advanced effects a focused pill scales up past its row. -->
+        <!-- Header row matching video zm7md1: Quick Pills on Left, Arabic Clock & Greeting on Right -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false">
 
-            <LinearLayout
-                android:id="@+id/leftBlock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/topButtons"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical">
-
-                <!-- The header texts use gravity left, not start: the launcher lays out left to right
-                     (no supportsRtl), and with start a right-to-left script such as Arabic would move to the
-                     right edge of these full-width lines instead of staying under the clock. -->
-                <TextView
-                    android:id="@+id/greeting"
-                    android:gravity="left"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:layout_marginStart="4dp"
-                    android:textColor="#8CFFFFFF"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/outfit_medium"
-                    android:letterSpacing="0.22"
-                    android:textAllCaps="true" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:baselineAligned="true">
-
-                    <TextClock
-                        android:id="@+id/clock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:format12Hour="h:mm"
-                        android:format24Hour="HH:mm"
-                        android:textColor="#FFFFFFFF"
-                        android:textSize="52sp"
-                        android:fontFamily="@font/outfit_light"
-                        android:letterSpacing="-0.04"
-                        android:includeFontPadding="false" />
-
-                    <TextClock
-                        android:id="@+id/ampm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_gravity="bottom"
-                        android:layout_marginBottom="8dp"
-                        android:format12Hour="a"
-                        android:format24Hour=""
-                        android:textColor="#B3FFFFFF"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/outfit_medium"
-                        android:letterSpacing="0.08"
-                        android:textAllCaps="true" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="26dp"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="#33FFFFFF" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginBottom="9dp"
-                        android:orientation="vertical">
-
-                        <!-- Shamsi date ("27 Mehr 1405"), shown when shamsi_date is on. -->
-                        <TextView
-                            android:id="@+id/shamsiDate"
-                            android:gravity="left"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            android:textColor="#E6FFFFFF"
-                            android:textSize="17sp"
-                            android:fontFamily="@font/outfit_regular"
-                            android:letterSpacing="0.02"
-                            android:includeFontPadding="false"
-                            android:visibility="gone" />
-
-                        <TextClock
-                            android:id="@+id/date"
-                            android:gravity="left"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="@bool/date_single_line"
-                            android:maxLines="2"
-                            android:lineSpacingExtra="6dp"
-                            android:ellipsize="end"
-                            android:format12Hour="@string/date_format_home"
-                            android:format24Hour="@string/date_format_home"
-                            android:textColor="#A6FFFFFF"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/outfit_regular"
-                            android:letterSpacing="0.14"
-                            android:textAllCaps="true" />
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Shown only when show_stats is on. Outside leftBlock, so the top buttons stay level with the clock
-                 row; gone, it takes no space. -->
-            <TextView
-                android:id="@+id/stats"
-                android:layout_width="0dp"
-                android:layout_below="@id/leftBlock"
-                android:layout_alignStart="@id/leftBlock"
-                android:layout_alignEnd="@id/leftBlock"
-                android:gravity="left"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:textColor="#D9FFFFFF"
-                android:textSize="14sp"
-                android:fontFamily="@font/outfit_medium"
-                android:letterSpacing="0.04"
-                android:focusable="false"
-                android:visibility="gone" />
-
+            <!-- Top Left: Quick Action Pills -->
             <LinearLayout
                 android:id="@+id/topButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/leftBlock"
-                android:layout_marginBottom="6dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/btnInputs"
+                    android:id="@+id/btnScreensaver"
                     style="@style/TopButton"
-                    android:text="@string/inputs"
-                    android:drawableStart="@drawable/ic_input"
+                    android:text="شاشة التوقف"
+                    android:drawableStart="@drawable/ic_picture"
+                    android:nextFocusDown="@+id/grid" />
+
+                <TextView
+                    android:id="@+id/btnCustomization"
+                    style="@style/TopButton"
+                    android:text="تخصيص الواجهة"
+                    android:drawableStart="@drawable/ic_tune"
+                    android:nextFocusDown="@+id/grid" />
+
+                <TextView
+                    android:id="@+id/btnSettings"
+                    style="@style/TopButton"
+                    android:text="إعدادات النظام"
+                    android:drawableStart="@drawable/ic_settings"
                     android:nextFocusDown="@+id/grid" />
 
                 <TextView
@@ -211,34 +112,405 @@
                     android:nextFocusDown="@+id/grid" />
 
                 <TextView
+                    android:id="@+id/btnInputs"
+                    style="@style/TopButton"
+                    android:text="@string/inputs"
+                    android:drawableStart="@drawable/ic_input"
+                    android:nextFocusDown="@+id/grid" />
+
+                <TextView
                     android:id="@+id/btnReorder"
                     style="@style/TopButtonIcon"
                     android:contentDescription="@string/reorder"
                     android:drawableStart="@drawable/ic_swap_vert"
-                    android:nextFocusDown="@+id/grid" />
-
-                <TextView
-                    android:id="@+id/btnSettings"
-                    style="@style/TopButton"
-                    android:text="@string/settings"
-                    android:drawableStart="@drawable/ic_settings"
+                    android:visibility="gone"
                     android:nextFocusDown="@+id/grid" />
             </LinearLayout>
+
+            <!-- Top Right: Islamic Greeting, Clock & Date (Right Aligned as in video zm7md1) -->
+            <LinearLayout
+                android:id="@+id/leftBlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="right|end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/greeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|end"
+                    android:gravity="right|end"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:text="مساء الخير"
+                    android:textColor="#E0F2FE"
+                    android:textSize="17sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:letterSpacing="0.02" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right|bottom|end"
+                    android:layout_gravity="right|end"
+                    android:baselineAligned="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="right|end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/shamsiDate"
+                            android:gravity="right|end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:textColor="#E6FFFFFF"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/thmanyah_regular"
+                            android:visibility="gone" />
+
+                        <TextClock
+                            android:id="@+id/date"
+                            android:gravity="right|end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:format12Hour="EEEE d MMMM"
+                            android:format24Hour="EEEE d MMMM"
+                            android:textColor="#B3FFFFFF"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/thmanyah_medium" />
+                    </LinearLayout>
+
+                    <!-- Sleek vertical separator matching video zm7md1 -->
+                    <View
+                        android:layout_width="1.5dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="#33FFFFFF" />
+
+                    <TextClock
+                        android:id="@+id/clock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:format12Hour="h:mm"
+                        android:format24Hour="HH:mm"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="52sp"
+                        android:fontFamily="@font/thmanyah_bold"
+                        android:letterSpacing="-0.02"
+                        android:includeFontPadding="false" />
+
+                    <TextClock
+                        android:id="@+id/ampm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/stats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|end"
+                    android:textColor="#D9FFFFFF"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
         </RelativeLayout>
+
+        <!-- Middle Zone: Glassmorphic Prayer & Hadith Dashboard -->
+        <LinearLayout
+            android:id="@+id/islamicDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <!-- Card 1: Hadith of the Day -->
+            <LinearLayout
+                android:id="@+id/cardHadith"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/widget_glass_card"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:layoutDirection="rtl"
+                android:nextFocusDown="@+id/grid"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/hadithBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✨ حديث اليوم"
+                        android:textColor="#FCD34D"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_bold"
+                        android:background="@drawable/badge_hadith_bg"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp" />
+
+                    <TextView
+                        android:id="@+id/hadithCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="فضل الذكر"
+                        android:textColor="#93C5FD"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/thmanyah_medium" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/hadithText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.25"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_regular" />
+
+                <TextView
+                    android:id="@+id/hadithSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="end"
+                    android:textColor="#A0AEC0"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/thmanyah_regular" />
+            </LinearLayout>
+
+            <!-- Card 2: Prayer & Iqamah Times - Jeddah -->
+            <LinearLayout
+                android:id="@+id/cardPrayer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/widget_glass_card"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:layoutDirection="rtl"
+                android:nextFocusDown="@+id/grid"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/prayerTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🕌 مواقيت الصلاة والإقامة — جدة"
+                        android:textColor="#38BDF8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/prayerCountdown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="الفجر بعد ٢:٣٠ س"
+                        android:textColor="#FDE047"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/thmanyah_medium" />
+                </LinearLayout>
+
+                <!-- 5 Prayers Grid Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <!-- Fajr -->
+                    <LinearLayout
+                        android:id="@+id/slotFajr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/prayer_normal_bg"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/nameFajr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الفجر" android:textColor="#94A3B8" android:textSize="11sp" android:fontFamily="@font/thmanyah_medium" />
+                        <TextView android:id="@+id/azanFajr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٥:٠٦" android:textColor="#FFFFFF" android:textSize="13sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/iqamaFajr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٥:٣١" android:textColor="#60A5FA" android:textSize="10sp" android:fontFamily="@font/thmanyah_regular" />
+                    </LinearLayout>
+
+                    <!-- Dhuhr -->
+                    <LinearLayout
+                        android:id="@+id/slotDhuhr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/prayer_normal_bg"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/nameDhuhr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الظهر" android:textColor="#94A3B8" android:textSize="11sp" android:fontFamily="@font/thmanyah_medium" />
+                        <TextView android:id="@+id/azanDhuhr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="١٢:٠٧" android:textColor="#FFFFFF" android:textSize="13sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/iqamaDhuhr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="١٢:٢٧" android:textColor="#60A5FA" android:textSize="10sp" android:fontFamily="@font/thmanyah_regular" />
+                    </LinearLayout>
+
+                    <!-- Asr -->
+                    <LinearLayout
+                        android:id="@+id/slotAsr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/prayer_normal_bg"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/nameAsr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="العصر" android:textColor="#94A3B8" android:textSize="11sp" android:fontFamily="@font/thmanyah_medium" />
+                        <TextView android:id="@+id/azanAsr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٣:٢٦" android:textColor="#FFFFFF" android:textSize="13sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/iqamaAsr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٣:٤٦" android:textColor="#60A5FA" android:textSize="10sp" android:fontFamily="@font/thmanyah_regular" />
+                    </LinearLayout>
+
+                    <!-- Maghrib -->
+                    <LinearLayout
+                        android:id="@+id/slotMaghrib"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/prayer_normal_bg"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/nameMaghrib" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="المغرب" android:textColor="#94A3B8" android:textSize="11sp" android:fontFamily="@font/thmanyah_medium" />
+                        <TextView android:id="@+id/azanMaghrib" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٥:٥١" android:textColor="#FFFFFF" android:textSize="13sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/iqamaMaghrib" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٦:٠١" android:textColor="#60A5FA" android:textSize="10sp" android:fontFamily="@font/thmanyah_regular" />
+                    </LinearLayout>
+
+                    <!-- Isha -->
+                    <LinearLayout
+                        android:id="@+id/slotIsha"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/prayer_normal_bg"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView android:id="@+id/nameIsha" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="العشاء" android:textColor="#94A3B8" android:textSize="11sp" android:fontFamily="@font/thmanyah_medium" />
+                        <TextView android:id="@+id/azanIsha" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٧:٢١" android:textColor="#FFFFFF" android:textSize="13sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/iqamaIsha" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="٧:٤١" android:textColor="#60A5FA" android:textSize="10sp" android:fontFamily="@font/thmanyah_regular" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Smart Folders / Categories Bar -->
+        <LinearLayout
+            android:id="@+id/categoryBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/catAll"
+                style="@style/TopButton"
+                android:layout_marginStart="0dp"
+                android:text="🌟 الكل"
+                android:nextFocusDown="@+id/grid" />
+
+            <TextView
+                android:id="@+id/catStreaming"
+                style="@style/TopButton"
+                android:text="🎬 سينما وبث"
+                android:nextFocusDown="@+id/grid" />
+
+            <TextView
+                android:id="@+id/catSports"
+                style="@style/TopButton"
+                android:text="⚽ رياضة"
+                android:nextFocusDown="@+id/grid" />
+
+            <TextView
+                android:id="@+id/catGames"
+                style="@style/TopButton"
+                android:text="🎮 ألعاب"
+                android:nextFocusDown="@+id/grid" />
+
+            <TextView
+                android:id="@+id/catTools"
+                style="@style/TopButton"
+                android:text="🛠️ أدوات"
+                android:nextFocusDown="@+id/grid" />
+        </LinearLayout>
 
         <!-- The wrapper clips at the grid's edge; the grid itself must not clip so scaled tiles can overflow their cells. -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/grid"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="10dp"
-                android:paddingBottom="40dp"
+                android:paddingBottom="12dp"
                 android:clipToPadding="false"
                 android:clipChildren="false"
                 android:overScrollMode="never"
@@ -247,11 +519,12 @@
         </FrameLayout>
     </LinearLayout>
 
-    <!-- The single floating glass highlight that springs between tiles. -->
+    <!-- GlassView disabled: the app tile itself uses modern Android TV focus scaling & border -->
     <com.gathin.tvhome.GlassView
         android:id="@+id/glass"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:alpha="0"
+        android:visibility="gone"
         android:importantForAccessibility="no" />
 </FrameLayout>

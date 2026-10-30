@@ -10,6 +10,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -182,6 +183,26 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private boolean libraryFocusPending;
     private RecyclerView.OnScrollListener pendingFocusScroll;
 
+    // Top bar screensaver button
+    private TextView btnScreensaver;
+
+    // Islamic & Prayer Dashboard
+    private View cardHadith;
+    private TextView hadithBadge;
+    private TextView hadithCategory;
+    private TextView hadithText;
+    private TextView hadithSource;
+
+    private View cardPrayer;
+    private TextView prayerTitle;
+    private TextView prayerCountdown;
+    private View slotFajr, slotDhuhr, slotAsr, slotMaghrib, slotIsha;
+    private TextView azanFajr, iqamaFajr;
+    private TextView azanDhuhr, iqamaDhuhr;
+    private TextView azanAsr, iqamaAsr;
+    private TextView azanMaghrib, iqamaMaghrib;
+    private TextView azanIsha, iqamaIsha;
+
     private final Handler handler = new Handler(Looper.getMainLooper());
     /** Refreshes the network pill when the connection changes: at boot Wi-Fi often connects after Home is shown. */
     private final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
@@ -245,6 +266,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FontHelper.applyFont(getWindow().getDecorView(), this);
         density = getResources().getDisplayMetrics().density;
         // config.xml, overlaid by config.json from a pushed theme (see Config and tools/theme.sh).
         Config cfg = Config.load(this);
@@ -279,6 +301,70 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         if (!cfg.dockTitle) heroName.setVisibility(View.GONE);
         greeting = findViewById(R.id.greeting);
         greetingColor = greeting.getCurrentTextColor();
+
+        btnScreensaver = findViewById(R.id.btnScreensaver);
+        if (btnScreensaver != null) {
+            btnScreensaver.setOnClickListener(v -> {
+                try {
+                    Intent intent = new Intent(this, com.chelseasaver.dream.ScreensaverActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(this, "تعذر تشغيل شاشة التوقف", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        // Islamic & Prayer Dashboard
+        cardHadith = findViewById(R.id.cardHadith);
+        if (cardHadith != null) {
+            hadithBadge = findViewById(R.id.hadithBadge);
+            hadithCategory = findViewById(R.id.hadithCategory);
+            hadithText = findViewById(R.id.hadithText);
+            hadithSource = findViewById(R.id.hadithSource);
+            cardHadith.setOnClickListener(v -> {
+                HadithManager.HadithItem next = HadithManager.nextHadith();
+                bindHadith(next);
+            });
+        }
+
+        cardPrayer = findViewById(R.id.cardPrayer);
+        if (cardPrayer != null) {
+            prayerTitle = findViewById(R.id.prayerTitle);
+            prayerCountdown = findViewById(R.id.prayerCountdown);
+            slotFajr = findViewById(R.id.slotFajr);
+            azanFajr = findViewById(R.id.azanFajr);
+            iqamaFajr = findViewById(R.id.iqamaFajr);
+
+            slotDhuhr = findViewById(R.id.slotDhuhr);
+            azanDhuhr = findViewById(R.id.azanDhuhr);
+            iqamaDhuhr = findViewById(R.id.iqamaDhuhr);
+
+            slotAsr = findViewById(R.id.slotAsr);
+            azanAsr = findViewById(R.id.azanAsr);
+            iqamaAsr = findViewById(R.id.iqamaAsr);
+
+            slotMaghrib = findViewById(R.id.slotMaghrib);
+            azanMaghrib = findViewById(R.id.azanMaghrib);
+            iqamaMaghrib = findViewById(R.id.iqamaMaghrib);
+
+            slotIsha = findViewById(R.id.slotIsha);
+            azanIsha = findViewById(R.id.azanIsha);
+            iqamaIsha = findViewById(R.id.iqamaIsha);
+
+            cardPrayer.setOnClickListener(v -> {
+                try {
+                    Intent intent = new Intent();
+                    intent.setComponent(new ComponentName("com.chelseasaver.dream", "com.chelseasaver.dream.MainActivity"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (Exception ignored) {}
+            });
+        }
+
+        applyCustomWallpaper();
+        applyWidgetVisibility();
+
         btnWifi = findViewById(R.id.btnWifi);
         shamsiDate = findViewById(R.id.shamsiDate);
         stats = findViewById(R.id.stats);
@@ -378,7 +464,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             // Keep the hero below the header when the library is enabled on a short screen,
             // even when the theme requests an extra visible row below the dock.
             int shelfClearance = cfg.appLibrary ? heroName.getMeasuredHeight() + (int) (40 * density) : 0;
-            int want = Math.max(shelfClearance, h - dockRow - gridRows - (int) (AppAdapter.BOTTOM_ROOM_DP * density));
+            int bottomRoom = rowsBelowDock > 0 ? (int) (AppAdapter.BOTTOM_ROOM_DP * density) : (int) (8 * density);
+            int want = Math.max(shelfClearance, h - dockRow - gridRows - bottomRoom);
             // Where the rows cannot fit even at the smallest tile (3 rows with the title on), the title keeps its
             // room above the dock and the last rows run off the bottom instead of the title drawing over the clock.
             if (MainActivity.this.dockRow && cfg.dockTitle && rowsBelowDock > 0) want = Math.max(want, (int) (AppAdapter.TITLE_ROOM_DP * density));
@@ -425,15 +512,37 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             }
         }
 
+        try {
+            CompanionServer.getInstance(this).start();
+            CompanionServer.setMessageListener(msg -> {
+                Toast.makeText(this, "💌 رسالة من الجوال:\n" + msg, Toast.LENGTH_LONG).show();
+            });
+        } catch (Exception ignored) {}
+        setupSmartCategories();
+
         btnInputs = findViewById(R.id.btnInputs);
         View btnSettings = findViewById(R.id.btnSettings);
+        View btnCustomization = findViewById(R.id.btnCustomization);
         btnInputs.setOnClickListener(v -> showInputs());
         btnWifi.setOnClickListener(v -> openNetworkPill());
         btnWifi.setOnLongClickListener(v -> {
             open(systemIntent(Settings.ACTION_WIFI_SETTINGS));
             return true;
         });
-        btnSettings.setOnClickListener(v -> open(systemIntent(Settings.ACTION_SETTINGS)));
+        if (btnCustomization != null) {
+            btnCustomization.setOnClickListener(v -> {
+                startActivityForResult(new Intent(this, LauncherSettingsActivity.class), LAUNCHER_SETTINGS_REQUEST);
+            });
+        }
+        btnSettings.setOnClickListener(v -> {
+            try {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            } catch (Exception e) {
+                try {
+                    startActivity(new Intent("android.settings.SETTINGS"));
+                } catch (Exception ignored) {}
+            }
+        });
         btnReorder = findViewById(R.id.btnReorder);
         btnReorder.setOnClickListener(v -> toggleReorder());
         btnReorder.setVisibility(cfg.reorderButton ? View.VISIBLE : View.GONE);
@@ -462,12 +571,16 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         btnInputs.setOnKeyListener(pillKeys);
         btnWifi.setOnKeyListener(pillKeys);
         btnSettings.setOnKeyListener(pillKeys);
+        if (btnCustomization != null) btnCustomization.setOnKeyListener(pillKeys);
+        if (btnScreensaver != null) btnScreensaver.setOnKeyListener(pillKeys);
         btnReorder.setOnKeyListener(pillKeys);
         if (advancedEffects) {
-            for (View button : new View[]{btnInputs, btnWifi, btnReorder, btnSettings}) {
-                button.setOnFocusChangeListener((view, focused) -> view.animate()
-                        .scaleX(focused ? 1.04f : 1f).scaleY(focused ? 1.04f : 1f)
-                        .setDuration(160).start());
+            for (View button : new View[]{btnInputs, btnWifi, btnReorder, btnSettings, btnCustomization, btnScreensaver}) {
+                if (button != null) {
+                    button.setOnFocusChangeListener((view, focused) -> view.animate()
+                            .scaleX(focused ? 1.04f : 1f).scaleY(focused ? 1.04f : 1f)
+                            .setDuration(160).start());
+                }
             }
         }
         if (festive) applyFestiveSkin((TextView) btnInputs, (TextView) btnSettings);
@@ -530,9 +643,34 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         }
     }
 
+    
+    // Inactivity Idle Screensaver Timer (especially for MTC and generic Android TVs)
+    private final Handler screensaverIdleHandler = new Handler(Looper.getMainLooper());
+    private static final long SCREENSAVER_IDLE_TIMEOUT_MS = 5 * 60 * 1000; // 5 دقائق خمول
+    private final Runnable screensaverIdleRunnable = () -> {
+        try {
+            Intent intent = new Intent(this, com.chelseasaver.dream.ScreensaverActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception ignored) {}
+    };
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        resetScreensaverIdleTimer();
+    }
+
+    private void resetScreensaverIdleTimer() {
+        screensaverIdleHandler.removeCallbacks(screensaverIdleRunnable);
+        screensaverIdleHandler.postDelayed(screensaverIdleRunnable, SCREENSAVER_IDLE_TIMEOUT_MS);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        resetScreensaverIdleTimer();
+        AppUpdateManager.checkSilently(this);
         // A festival that started or ended while Home was in the background: rebuild with or without it.
         if (festive != festival.active(LocalDate.now())) {
             recreate();
@@ -544,6 +682,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             reloadApps(true);
         }
         rebuildOnResume = false;
+        FontHelper.applyFont(getWindow().getDecorView(), this);
         updateGreeting();
         updateWifiLabel();
         updateInputsButton();
@@ -551,6 +690,11 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         sky.update();
         wallpaperPlayer.start();
         handler.postDelayed(minuteTick, MINUTE_MS);
+        grid.post(() -> {
+            if (!grid.hasFocus() && appLibrary == null && (openPopup == null || !openPopup.isShowing())) {
+                focusTile(lastFocused >= 0 ? lastFocused : 0);
+            }
+        });
         if (festive && diya != null) {
             diya.start();
             LocalDate today = LocalDate.now();
@@ -641,6 +785,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     @Override
     protected void onPause() {
         super.onPause();
+        screensaverIdleHandler.removeCallbacks(screensaverIdleRunnable);
         endReorder();   // Home or another app while reordering keeps the order so far
         wallpaperPlayer.stop();
         stopAmbientAnimation();
@@ -1009,24 +1154,9 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             // GlassView draws its slab inset by pad, i.e. exactly over the zoomed tile: same corners as the tile.
             glass.setRadius(AppAdapter.cornerRadius(card.getWidth(), density) * scale);
         }
-        glassTargetX = x;
-        glassTargetY = y;
-        if (!glassShown) {
-            springX.cancel();
-            springY.cancel();
-            glass.setTranslationX(x);
-            glass.setTranslationY(y);
-            if (animations) glass.animate().alpha(1f).setDuration(reducedMotion ? 100 : 180).start();
-            else glass.setAlpha(1f);
-            glassShown = true;
-        } else if (!animations) {
-            springX.cancel();
-            springY.cancel();
-            glass.setTranslationX(x);
-            glass.setTranslationY(y);
-        } else {
-            springX.animateToFinalPosition(x);
-            springY.animateToFinalPosition(y - glassScrollShift);
+        if (glass != null) {
+            glass.setVisibility(View.GONE);
+            glass.setAlpha(0f);
         }
         View item = (View) card.getParent();
         if (dockRow && position < COLUMNS) {
@@ -1056,7 +1186,14 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private void showHero(int position, float dockTopInRoot) {
         String label = adapter.labelAt(position);
         int color = adapter.ambientColorAt(position);
-        float y = dockTopInRoot - 14 * density - 26 * density - heroName.getHeight();
+        heroName.setText(label);
+        int heroH = heroName.getHeight();
+        if (heroH <= 0) {
+            heroName.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            heroH = heroName.getMeasuredHeight();
+        }
+        float y = dockTopInRoot - 14 * density - 26 * density - heroH;
+        heroName.setX(56 * density);
         boolean changed = !label.contentEquals(heroName.getText());
 
         if (!animations || reducedMotion) {
@@ -1066,6 +1203,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             ambient.animate().cancel();
             heroName.setText(label);
             heroName.setY(y);
+            heroName.setX(56 * density);
             heroName.setTranslationX(0f);
             heroName.setAlpha(1f);
             setAmbient(color);
@@ -1086,6 +1224,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             ambient.animate().cancel();
             heroName.setText(label);
             heroName.setY(y);
+            heroName.setX(56 * density);
             heroName.setTranslationX(0f);
             heroName.animate().alpha(1f).setDuration(260).start();
             setAmbient(color);
@@ -1096,6 +1235,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             heroName.animate().alpha(0f).translationX(-12 * density).setDuration(120).withEndAction(() -> {
                 heroName.setText(label);
                 heroName.setY(y);
+                heroName.setX(56 * density);
                 heroName.setTranslationX(12 * density);
                 heroName.animate().alpha(1f).translationX(0f).setDuration(200).start();
             }).start();
@@ -1109,6 +1249,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             }
         } else {
             heroName.setY(y);
+            heroName.setX(56 * density);
         }
     }
 
@@ -1501,56 +1642,214 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         RecyclerView.ViewHolder vh = grid.findViewHolderForAdapterPosition(pos);
         if (vh != null) {
             View card = vh.itemView.findViewById(R.id.card);
-            // Already focused (e.g. back from an app): no focus change fires, so restore the glass by hand.
-            if (card.isFocused()) onTileFocused(pos, card);
-            else card.requestFocus();
-            return;
-        }
-        // Not laid out yet: scroll there, then focus once the scroll settles.
-        if (!animations) {
-            grid.scrollToPosition(pos);
-            grid.post(() -> {
-                RecyclerView.ViewHolder h = grid.findViewHolderForAdapterPosition(pos);
-                if (h != null) h.itemView.findViewById(R.id.card).requestFocus();
-            });
-            return;
-        }
-        pendingFocusScroll = new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView rv, int newState) {
-                if (newState != RecyclerView.SCROLL_STATE_IDLE) return;
-                rv.removeOnScrollListener(this);
-                if (pendingFocusScroll != this) return;
-                pendingFocusScroll = null;
-                RecyclerView.ViewHolder h = rv.findViewHolderForAdapterPosition(pos);
-                View target = h != null ? h.itemView.findViewById(R.id.card) : rv.getChildAt(0);
-                if (target != null) target.requestFocus();
+            if (card != null) {
+                if (card.isFocused()) onTileFocused(pos, card);
+                else card.requestFocus();
+                return;
             }
-        };
-        grid.addOnScrollListener(pendingFocusScroll);
-        grid.smoothScrollToPosition(pos);
+        }
+        // If not laid out yet or already at pos 0, post to grid
+        grid.post(() -> {
+            RecyclerView.ViewHolder h = grid.findViewHolderForAdapterPosition(pos);
+            if (h != null) {
+                View card = h.itemView.findViewById(R.id.card);
+                if (card != null) {
+                    card.requestFocus();
+                    onTileFocused(pos, card);
+                    return;
+                }
+            }
+            if (grid.getChildCount() > 0) {
+                View child = grid.getChildAt(0);
+                View card = child != null ? child.findViewById(R.id.card) : null;
+                if (card != null) {
+                    card.requestFocus();
+                    onTileFocused(0, card);
+                }
+            }
+        });
+        if (pos > 0) {
+            if (!animations) {
+                grid.scrollToPosition(pos);
+            } else {
+                pendingFocusScroll = new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull RecyclerView rv, int newState) {
+                        if (newState != RecyclerView.SCROLL_STATE_IDLE) return;
+                        rv.removeOnScrollListener(this);
+                        if (pendingFocusScroll != this) return;
+                        pendingFocusScroll = null;
+                        RecyclerView.ViewHolder h = rv.findViewHolderForAdapterPosition(pos);
+                        View target = h != null ? h.itemView.findViewById(R.id.card) : rv.getChildAt(0);
+                        if (target != null) target.requestFocus();
+                    }
+                };
+                grid.addOnScrollListener(pendingFocusScroll);
+                grid.smoothScrollToPosition(pos);
+            }
+        }
     }
 
     // ---- top bar ---------------------------------------------------------------------------------
 
     private void updateGreeting() {
-        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int res;
-        if (hour < 5) res = R.string.good_night;
-        else if (hour < 12) res = R.string.good_morning;
-        else if (hour < 17) res = R.string.good_afternoon;
-        else if (hour < 22) res = R.string.good_evening;
-        else res = R.string.good_night;
-        String festiveGreeting = festive ? festival.greetingText() : "";
-        if (!festiveGreeting.isEmpty()) {
-            greeting.setText(festiveGreeting);
-            greeting.setTextColor(liftTowardsWhite(festival.accentColor(), 0.25f));
-        } else {
-            greeting.setText(greetingName.isEmpty() ? getString(res)
-                    : getString(R.string.greeting_with_name, getString(res), greetingName));
-            greeting.setTextColor(greetingColor);
-        }
+        greeting.setText(IslamicGreetingManager.getGreeting());
+        greeting.setTextColor(0xFFBFE0FF);
         if (shamsi) shamsiDate.setText(Shamsi.today());
+        updateIslamicSection();
+    }
+
+    private void bindHadith(HadithManager.HadithItem hadith) {
+        if (hadith == null) return;
+        if (hadithText != null) hadithText.setText(hadith.text);
+        if (hadithSource != null) hadithSource.setText(hadith.source);
+        if (hadithCategory != null) hadithCategory.setText(hadith.category);
+    }
+
+    private void updateIslamicSection() {
+        if (cardHadith != null) {
+            bindHadith(HadithManager.getTodayHadith());
+        }
+
+        if (cardPrayer != null) {
+            if (prayerTitle != null) {
+                prayerTitle.setText("🕌 مواقيت الصلاة والإقامة — " + PrayerManager.getCityName(this));
+            }
+            PrayerManager.PrayerInfo info = PrayerManager.getTodayPrayers(this);
+            if (info != null) {
+                if (prayerCountdown != null) prayerCountdown.setText(info.nextStatus);
+
+                if (azanFajr != null) azanFajr.setText(info.fajrAzan);
+                if (iqamaFajr != null) iqamaFajr.setText("إقامة " + info.fajrIqamah);
+
+                if (azanDhuhr != null) azanDhuhr.setText(info.dhuhrAzan);
+                if (iqamaDhuhr != null) iqamaDhuhr.setText("إقامة " + info.dhuhrIqamah);
+
+                if (azanAsr != null) azanAsr.setText(info.asrAzan);
+                if (iqamaAsr != null) iqamaAsr.setText("إقامة " + info.asrIqamah);
+
+                if (azanMaghrib != null) azanMaghrib.setText(info.maghribAzan);
+                if (iqamaMaghrib != null) iqamaMaghrib.setText("إقامة " + info.maghribIqamah);
+
+                if (azanIsha != null) azanIsha.setText(info.ishaAzan);
+                if (iqamaIsha != null) iqamaIsha.setText("إقامة " + info.ishaIqamah);
+
+                highlightPrayerSlot("fajr".equals(info.activeKey), slotFajr);
+                highlightPrayerSlot("dhuhr".equals(info.activeKey), slotDhuhr);
+                highlightPrayerSlot("asr".equals(info.activeKey), slotAsr);
+                highlightPrayerSlot("maghrib".equals(info.activeKey), slotMaghrib);
+                highlightPrayerSlot("isha".equals(info.activeKey), slotIsha);
+            }
+        }
+    }
+
+    private void highlightPrayerSlot(boolean active, View slot) {
+        if (slot == null) return;
+        if (active) {
+            slot.setBackgroundResource(R.drawable.prayer_active_bg);
+        } else {
+            slot.setBackgroundResource(R.drawable.prayer_normal_bg);
+        }
+    }
+
+    private void applyCustomWallpaper() {
+        ImageView wallpaperView = findViewById(R.id.wallpaper);
+        if (wallpaperView == null) return;
+        SharedPreferences sp = getSharedPreferences(Config.SETTINGS_NAME, MODE_PRIVATE);
+        String wp = sp.getString("wallpaper_choice", "auto");
+        int resId = R.drawable.wallpaper_alula_blue_sky;
+        if ("auto".equals(wp)) {
+            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            int[] rot = {
+                R.drawable.wallpaper_alula_blue_sky,
+                R.drawable.wallpaper_alula_maraya_hall,
+                R.drawable.wallpaper_alula_elephant_rock,
+                R.drawable.wallpaper_edge_of_the_world,
+                R.drawable.wallpaper_alula_hegra_monolith,
+                R.drawable.wallpaper_alula_green_oasis,
+                R.drawable.wallpaper_alula_sunset,
+                R.drawable.wallpaper_alula_night_stars
+            };
+            resId = rot[(hour / 3) % rot.length];
+        } else if ("maraya".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_maraya_hall;
+        } else if ("elephant".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_elephant_rock;
+        } else if ("edge".equals(wp)) {
+            resId = R.drawable.wallpaper_edge_of_the_world;
+        } else if ("hegra".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_hegra_monolith;
+        } else if ("oasis".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_green_oasis;
+        } else if ("sunset".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_sunset;
+        } else if ("stars".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_night_stars;
+        } else if ("blue_sky".equals(wp)) {
+            resId = R.drawable.wallpaper_alula_blue_sky;
+        }
+        wallpaperView.setImageResource(resId);
+    }
+
+    private void setupSmartCategories() {
+        View catBar = findViewById(R.id.categoryBar);
+        if (catBar == null) return;
+        SharedPreferences sp = getSharedPreferences(Config.SETTINGS_NAME, MODE_PRIVATE);
+        boolean enabled = sp.getBoolean("smart_folders", true);
+        catBar.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        if (!enabled) return;
+
+        boolean catStreamingEnabled = sp.getBoolean("cat_streaming_enabled", true);
+        boolean catSportsEnabled = sp.getBoolean("cat_sports_enabled", true);
+        boolean catGamesEnabled = sp.getBoolean("cat_games_enabled", true);
+        boolean catToolsEnabled = sp.getBoolean("cat_tools_enabled", true);
+        String defaultFolder = sp.getString("default_folder", SmartCategory.CAT_ALL);
+
+        TextView catAll = findViewById(R.id.catAll);
+        TextView catStreaming = findViewById(R.id.catStreaming);
+        TextView catSports = findViewById(R.id.catSports);
+        TextView catGames = findViewById(R.id.catGames);
+        TextView catTools = findViewById(R.id.catTools);
+
+        if (catStreaming != null) catStreaming.setVisibility(catStreamingEnabled ? View.VISIBLE : View.GONE);
+        if (catSports != null) catSports.setVisibility(catSportsEnabled ? View.VISIBLE : View.GONE);
+        if (catGames != null) catGames.setVisibility(catGamesEnabled ? View.VISIBLE : View.GONE);
+        if (catTools != null) catTools.setVisibility(catToolsEnabled ? View.VISIBLE : View.GONE);
+
+        TextView[] cats = {catAll, catStreaming, catSports, catGames, catTools};
+        String[] catKeys = {SmartCategory.CAT_ALL, SmartCategory.CAT_STREAMING, SmartCategory.CAT_SPORTS, SmartCategory.CAT_GAMES, SmartCategory.CAT_TOOLS};
+
+        for (TextView c : cats) if (c != null) c.setSelected(false);
+
+        int defaultIdx = 0;
+        for (int i = 0; i < catKeys.length; i++) {
+            if (catKeys[i].equals(defaultFolder) && cats[i] != null && cats[i].getVisibility() == View.VISIBLE) {
+                defaultIdx = i;
+                break;
+            }
+        }
+        if (cats[defaultIdx] != null) cats[defaultIdx].setSelected(true);
+        if (adapter != null) adapter.setCategory(catKeys[defaultIdx]);
+
+        for (int i = 0; i < cats.length; i++) {
+            if (cats[i] == null) continue;
+            final int idx = i;
+            cats[i].setOnClickListener(v -> {
+                for (TextView c : cats) if (c != null) c.setSelected(false);
+                cats[idx].setSelected(true);
+                if (adapter != null) adapter.setCategory(catKeys[idx]);
+            });
+        }
+    }
+
+    private void applyWidgetVisibility() {
+        SharedPreferences sp = getSharedPreferences(Config.SETTINGS_NAME, MODE_PRIVATE);
+        boolean showPrayer = sp.getBoolean("show_prayer_widget", true);
+        boolean showHadith = sp.getBoolean("show_hadith_widget", true);
+        if (cardPrayer != null) cardPrayer.setVisibility(showPrayer ? View.VISIBLE : View.GONE);
+        if (cardHadith != null) cardHadith.setVisibility(showHadith ? View.VISIBLE : View.GONE);
+        View dashboard = findViewById(R.id.islamicDashboard);
+        if (dashboard != null) dashboard.setVisibility((showPrayer || showHadith) ? View.VISIBLE : View.GONE);
     }
 
     /** Shows the Wi-Fi network name on the button when we can read it, otherwise the connection type. */
@@ -1825,7 +2124,15 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
                 // The name given in Settings > Inputs (e.g. "MacBook Pro") goes first, the port after it.
                 CharSequence custom = info.loadCustomLabel(this);
                 if (custom != null && custom.length() > 0 && !custom.toString().equals(label)) {
-                    label = custom + " \u00B7 " + label;
+                    label = custom + " · " + label;
+                } else {
+                    SharedPreferences sp = getSharedPreferences(Config.SETTINGS_NAME, MODE_PRIVATE);
+                    String c1 = sp.getString("custom_input_name_hdmi1", null);
+                    String c2 = sp.getString("custom_input_name_hdmi2", null);
+                    String c3 = sp.getString("custom_input_name_hdmi3", null);
+                    if (label.contains("1") && c1 != null && !c1.startsWith("منفذ")) label = c1 + " · " + label;
+                    else if (label.contains("2") && c2 != null && !c2.startsWith("منفذ")) label = c2 + " · " + label;
+                    else if (label.contains("3") && c3 != null && !c3.startsWith("منفذ")) label = c3 + " · " + label;
                 }
                 final String id = info.getId();
                 int state = hdmi && hdmiStateBogus ? -1 : tim.getInputState(id);

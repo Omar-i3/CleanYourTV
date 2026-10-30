@@ -1,96 +1,1105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF101419"
-    android:fillViewport="true">
+    android:background="#FF090E17"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
 
+    <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="72dp"
-        android:paddingEnd="72dp"
-        android:paddingTop="38dp"
-        android:paddingBottom="38dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/launcher_settings"
-            android:textColor="#FFFFFFFF"
-            android:textSize="34sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="@string/columns_label"
-            android:textColor="#FFFFFFFF"
-            android:textSize="20sp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="18dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <TextView android:id="@+id/columns4" style="@style/SettingsColumnChoice" android:text="4" />
-            <TextView android:id="@+id/columns5" style="@style/SettingsColumnChoice" android:text="5" />
-            <TextView android:id="@+id/columns6" style="@style/SettingsColumnChoice" android:text="6" />
-            <TextView android:id="@+id/columns7" style="@style/SettingsColumnChoice" android:text="7" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚙️ مركز تخصيص وإعدادات التلفاز"
+                android:textColor="#FFFFFFFF"
+                android:textSize="26sp"
+                android:fontFamily="@font/thmanyah_bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="تنقل بالأسهم بين الأقسام من اليمين وتحكم بكافة الخيارات في اليسار"
+                android:textColor="#94A3B8"
+                android:textSize="13sp"
+                android:fontFamily="@font/thmanyah_regular" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/animationsChoice"
-            style="@style/SettingsRow"
-            android:layout_marginTop="28dp" />
-
-        <TextView
-            android:id="@+id/advancedChoice"
-            style="@style/SettingsRow"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/advanced_effects_warning"
-            android:textColor="#FFACB8C1"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/followThemeChoice"
-            style="@style/SettingsRow"
-            android:layout_marginTop="18dp"
-            android:text="@string/follow_theme" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="@string/follow_theme_hint"
-            android:textColor="#FFACB8C1"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/defaultHomeChoice"
-            style="@style/SettingsRow"
-            android:layout_marginTop="28dp"
-            android:text="@string/home_settings" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="@string/home_settings_help"
-            android:textColor="#FFACB8C1"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tvSettingsChoice"
-            style="@style/SettingsRow"
-            android:layout_marginTop="18dp"
-            android:text="@string/tv_settings" />
+            android:id="@+id/btnCloseSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@drawable/button_primary_bg"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:gravity="center"
+            android:text="✓ حفظ والرجوع"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp"
+            android:fontFamily="@font/thmanyah_bold"
+            android:focusable="true"
+            android:clickable="true" />
     </LinearLayout>
-</ScrollView>
+
+    <!-- Master-Detail 2-Pane Body -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- ============================================== -->
+        <!-- القائمة الجانبية (اليمين في RTL): أقسام الإعدادات -->
+        <!-- ============================================== -->
+        <ScrollView
+            android:layout_width="290dp"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/tabsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tabPrayers"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="🕌 مواقيت الصلاة والإقامة"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/tabThemes"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="🎨 المظهر والثيمات والخلفيات"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/tabSports"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="⚽ الرياضة وفريقك المفضل"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/tabApps"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="📱 التطبيقات والمجلدات"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/tabInputs"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="🔌 مداخل التلفزيون (HDMI)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/tabMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="📲 التحكم والربط بالجوال"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/tabSystem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/settings_tab_bg"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="⚙️ شاشة التوقف والنظام"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/thmanyah_bold"
+                    android:focusable="true"
+                    android:clickable="true" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="1.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="#1E293B" />
+
+        <!-- ============================================== -->
+        <!-- لوحة التفاصيل (اليسار في RTL): خيارات وتخصيص القسم -->
+        <!-- ============================================== -->
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 1. لوحة مواقيت الصلاة والإقامة -->
+                <LinearLayout
+                    android:id="@+id/panePrayers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🕌 مواقيت الصلاة واختيار المدينة"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="اختر المدينة لتحديث الأوقات والطقس تلقائياً:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/cityJeddah" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="جدة" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityRiyadh" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الرياض" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityMakkah" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="مكة المكرمة" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityMadinah" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="المدينة المنورة" android:fontFamily="@font/thmanyah_bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/cityDammam" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الدمام" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityBuraidah" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="بريدة" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityTabuk" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="تبوك" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityAbha" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="أبها" android:fontFamily="@font/thmanyah_bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/cityHail" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="حائل" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityJazan" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="جازان" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/cityNajran" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="نجران" android:fontFamily="@font/thmanyah_bold" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <!-- تخصيص وقت الإقامة لكل صلاة بالدقائق -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="⏱️ تخصيص فترات الإقامة بالدقائق (الوقت بين الأذان والإقامة)"
+                        android:textColor="#F6C85F"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <!-- صف الفجر -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="صلاة الفجر:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/lblIqamahFajr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="25 دقيقة" android:textColor="#38BDF8" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" android:layout_marginEnd="16dp" />
+                        <TextView android:id="@+id/btnFajrMinus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="-" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" android:layout_marginEnd="8dp" />
+                        <TextView android:id="@+id/btnFajrPlus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="+" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- صف الظهر -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="صلاة الظهر:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/lblIqamahDhuhr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="20 دقيقة" android:textColor="#38BDF8" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" android:layout_marginEnd="16dp" />
+                        <TextView android:id="@+id/btnDhuhrMinus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="-" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" android:layout_marginEnd="8dp" />
+                        <TextView android:id="@+id/btnDhuhrPlus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="+" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- صف العصر -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="صلاة العصر:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/lblIqamahAsr" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="20 دقيقة" android:textColor="#38BDF8" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" android:layout_marginEnd="16dp" />
+                        <TextView android:id="@+id/btnAsrMinus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="-" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" android:layout_marginEnd="8dp" />
+                        <TextView android:id="@+id/btnAsrPlus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="+" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- صف المغرب -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="صلاة المغرب:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/lblIqamahMaghrib" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10 دقائق" android:textColor="#38BDF8" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" android:layout_marginEnd="16dp" />
+                        <TextView android:id="@+id/btnMaghribMinus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="-" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" android:layout_marginEnd="8dp" />
+                        <TextView android:id="@+id/btnMaghribPlus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="+" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- صف العشاء -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="صلاة العشاء:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/lblIqamahIsha" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="20 دقيقة" android:textColor="#38BDF8" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" android:layout_marginEnd="16dp" />
+                        <TextView android:id="@+id/btnIshaMinus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="-" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" android:layout_marginEnd="8dp" />
+                        <TextView android:id="@+id/btnIshaPlus" android:layout_width="38dp" android:layout_height="38dp" android:background="@drawable/settings_button_action" android:gravity="center" android:text="+" android:textColor="#FFFFFF" android:textSize="20sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- خيارات التنبيه -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/togglePrayerWidget" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="مواقيت الصلاة في الواجهة" />
+                        <TextView android:id="@+id/togglePrayerAlert" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="تنبيهات الأذان والإقامة التفاعلية" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 2. لوحة المظهر والثيمات والخلفيات -->
+                <LinearLayout
+                    android:id="@+id/paneThemes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🎨 خلفيات الواجهة ومعالم المملكة 4K"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/wpAuto" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="🔄 تبديل دوري تلقائي" />
+                        <TextView android:id="@+id/wpBlueSky" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="سماء زرقاء" />
+                        <TextView android:id="@+id/wpMaraya" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="قاعة مرايا" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/wpElephant" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="صخرة الفيل" />
+                        <TextView android:id="@+id/wpEdge" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="حافة العالم" />
+                        <TextView android:id="@+id/wpHegra" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="قصر الفريد" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/wpOasis" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الواحة الخضراء" />
+                        <TextView android:id="@+id/wpSunset" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الغروب الناري" />
+                        <TextView android:id="@+id/wpStars" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="ليل ونجوم" />
+                    </LinearLayout>
+
+                    <!-- مصدر صور شاشة التوقف -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="🖼️ مصدر صور شاشة التوقف (معالم السعودية أو ألبوم العائلة):"
+                        android:textColor="#F6C85F"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/bgSourceLandmarks" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🏞️ معالم السعودية 4K" />
+                        <TextView android:id="@+id/bgSourceFamily" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="👨‍👩‍👧‍👦 ألبوم الصور الخاص" />
+                        <TextView android:id="@+id/bgSourceBoth" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🔄 مزج الاثنين معاً" />
+                    </LinearLayout>
+
+                    <!-- سرعة تبديل شاشة التوقف -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="⏳ سرعة تبديل خلفيات شاشة التوقف:"
+                        android:textColor="#94A3B8"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/bgSpeed30" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="30 ثانية" />
+                        <TextView android:id="@+id/bgSpeed60" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="60 ثانية" />
+                        <TextView android:id="@+id/bgSpeed90" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="90 ثانية" />
+                        <TextView android:id="@+id/bgSpeed120" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="دقيقتين" />
+                    </LinearLayout>
+
+                    <!-- اختيار نوع الخط -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="🔤 نوع الخط المفضل للواجهة وشاشة التوقف:"
+                        android:textColor="#F6C85F"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="اختر نوع الخط العربي الذي يناسب شاشتك وذوقك:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/fontThmanyah" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="👑 خط ثمانية الفاخر" />
+                        <TextView android:id="@+id/fontDubai" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="📺 خط دبي التلفزيوني" />
+                        <TextView android:id="@+id/fontSystem" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="⚙️ خط النظام القياسي" />
+                    </LinearLayout>
+
+                    <!-- مقياس وحجم الخط -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="🔍 حجم الخط ونصوص الشاشة:"
+                        android:textColor="#F6C85F"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/fontScaleNormal" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="عادي (100%)" />
+                        <TextView android:id="@+id/fontScaleMedium" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="متوسط (110%)" />
+                        <TextView android:id="@+id/fontScaleLarge" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="كبير ومقروء (120%)" />
+                    </LinearLayout>
+
+                    <!-- تظليل وتعتيم خلفية شاشة التوقف -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="🌘 تظليل وتعتيم خلفية شاشة التوقف لزيادة التباين ووضوح الخط:"
+                        android:textColor="#94A3B8"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/dimLight" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="خفيف (20%)" />
+                        <TextView android:id="@+id/dimMedium" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="متوازن (40%)" />
+                        <TextView android:id="@+id/dimHeavy" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="داكن وعالي التباين (65%)" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 3. لوحة الرياضة وفريقك المفضل -->
+                <LinearLayout
+                    android:id="@+id/paneSports"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="⚽ اختر ناديك المفضل لمتابعة مبارياته مباشرة"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="تُجلب مباريات النادي والنتائج الحية وتوقيت المباريات تلقائياً:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <!-- أندية الدوري السعودي -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/teamHilal" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الهلال 🇸🇦" />
+                        <TextView android:id="@+id/teamNassr" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="النصر 🇸🇦" />
+                        <TextView android:id="@+id/teamIttihad" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الاتحاد 🇸🇦" />
+                        <TextView android:id="@+id/teamAhli" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الأهلي 🇸🇦" />
+                    </LinearLayout>
+
+                    <!-- أندية عالمية -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/teamReal" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="ريال مدريد 🇪🇸" />
+                        <TextView android:id="@+id/teamBarca" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="برشلونة 🇪🇸" />
+                        <TextView android:id="@+id/teamCity" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="مانشستر سيتي 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                        <TextView android:id="@+id/teamLiverpool" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="ليفربول 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/teamArsenal" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="آرسنال 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                        <TextView android:id="@+id/teamChelsea" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="تشيلسي 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                        <TextView android:id="@+id/teamShabab" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الشباب 🇸🇦" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <!-- اختيار النادي الثاني (اختياري) -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="⚽ اختر نادياً ثانياً لمتابعة نتائجه معاً (أو 'بدون'):"
+                        android:textColor="#38BDF8"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="عند اختيار نادٍ ثانٍ، ستتناوب مباريات وأخبار الناديين في شاشة التوقف تلقائياً:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <!-- زر بدون نادي ثاني -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/team2None" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="🚫 بدون (نادٍ واحد فقط)" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <!-- أندية الدوري السعودي للنادي الثاني -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/team2Hilal" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الهلال 🇸🇦" />
+                        <TextView android:id="@+id/team2Nassr" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="النصر 🇸🇦" />
+                        <TextView android:id="@+id/team2Ittihad" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الاتحاد 🇸🇦" />
+                        <TextView android:id="@+id/team2Ahli" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الأهلي 🇸🇦" />
+                    </LinearLayout>
+
+                    <!-- أندية عالمية للنادي الثاني -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/team2Real" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="ريال مدريد 🇪🇸" />
+                        <TextView android:id="@+id/team2Barca" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="برشلونة 🇪🇸" />
+                        <TextView android:id="@+id/team2City" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="مانشستر سيتي 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                        <TextView android:id="@+id/team2Liverpool" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="ليفربول 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/team2Arsenal" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="آرسنال 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                        <TextView android:id="@+id/team2Chelsea" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="تشيلسي 🏴󠁧󠁢󠁥󠁮󠁧󠁿" />
+                        <TextView android:id="@+id/team2Shabab" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="الشباب 🇸🇦" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <!-- سرعة تدوير مباريات الناديين -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="⏱️ سرعة تدوير وعرض المباريات بين الناديين:"
+                        android:textColor="#F6C85F"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/matchSpeed5" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="5 ثوانٍ" />
+                        <TextView android:id="@+id/matchSpeed10" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="10 ثوانٍ" />
+                        <TextView android:id="@+id/matchSpeed15" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="15 ثانية" />
+                        <TextView android:id="@+id/matchSpeed20" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="20 ثانية" />
+                    </LinearLayout>
+
+                    <!-- شريط أخبار النادي ووضع يوم المباراة -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="📰 شريط الأخبار وتحديثات المباريات الحية:"
+                        android:textColor="#F6C85F"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/toggleNewsTicker" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="شريط أخبار النادي: مفعّل" />
+                        <TextView android:id="@+id/toggleMatchdayMode" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="وضع يوم المباراة الحي: مفعّل" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/toggleSsMatches" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="عرض مباريات الفريق: مفعّلة" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 4. لوحة التطبيقات والمجلدات الذكية -->
+                <LinearLayout
+                    android:id="@+id/paneApps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📱 تخصيص شبكة التطبيقات والمجلدات الذكية"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="عدد التطبيقات في كل صف:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/columns4" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="4 تطبيقات" />
+                        <TextView android:id="@+id/columns5" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="5 تطبيقات" />
+                        <TextView android:id="@+id/columns6" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="6 تطبيقات" />
+                        <TextView android:id="@+id/columns7" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="7 تطبيقات" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/animationsChoice"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="14dp"
+                        android:text="تأثيرات الحركة: مفعلة" />
+
+                    <TextView
+                        android:id="@+id/toggleSmartFolders"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="10dp"
+                        android:text="📁 المجلدات الذكية (شريط التصنيف): مفعّلة" />
+
+                    <!-- قسم التحكم والتخصيص الفردي للمجلدات الذكية -->
+                    <LinearLayout
+                        android:id="@+id/layoutFolderControls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/settings_group_card_bg"
+                        android:padding="18dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="🗂️ تخصيص ظهور المجلدات الفردية:"
+                            android:textColor="#38BDF8"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/thmanyah_bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="تحكّم بإظهار أو إخفاء أي مجلد من الشاشة الرئيسية:"
+                            android:textColor="#94A3B8"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/thmanyah_regular" />
+
+                        <TextView
+                            android:id="@+id/toggleCatStreaming"
+                            style="@style/SettingsRow"
+                            android:layout_marginTop="10dp"
+                            android:text="🎬 مجلد سينما وبث (أفلام، مسلسلات، يوتيوب): مفعّل" />
+
+                        <TextView
+                            android:id="@+id/toggleCatSports"
+                            style="@style/SettingsRow"
+                            android:layout_marginTop="8dp"
+                            android:text="⚽ مجلد رياضة ومباريات (كورة، بثوث، دوريات): مفعّل" />
+
+                        <TextView
+                            android:id="@+id/toggleCatGames"
+                            style="@style/SettingsRow"
+                            android:layout_marginTop="8dp"
+                            android:text="🎮 مجلد ألعاب وترفيه (ألعاب، محاكيات): مفعّل" />
+
+                        <TextView
+                            android:id="@+id/toggleCatTools"
+                            style="@style/SettingsRow"
+                            android:layout_marginTop="8dp"
+                            android:text="🛠️ مجلد أدوات ونظام (إعدادات، متصفح، ملفات): مفعّل" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="🌟 مجلد البداية الافتراضي عند فتح الشاشة الرئيسية:"
+                            android:textColor="#38BDF8"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/thmanyah_bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+                            <TextView android:id="@+id/defCatAll" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🌟 الكل" />
+                            <TextView android:id="@+id/defCatStreaming" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🎬 سينما" />
+                            <TextView android:id="@+id/defCatSports" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="⚽ رياضة" />
+                            <TextView android:id="@+id/defCatGames" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🎮 ألعاب" />
+                            <TextView android:id="@+id/defCatTools" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🛠️ أدوات" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btnReorderApps"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="10dp"
+                        android:text="↕ ترتيب التطبيقات يدوياً بالريموت" />
+                </LinearLayout>
+
+                <!-- 5. لوحة مداخل التلفزيون (HDMI) -->
+                <LinearLayout
+                    android:id="@+id/paneInputs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🔌 مداخل التلفزيون وتسميات HDMI المخصصة"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="أعد تسمية منافذ HDMI لتظهر في قائمة المدخلات باسم الجهاز المتصل:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <!-- HDMI 1 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="منفذ HDMI 1:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/btnHdmi1Label" android:layout_width="wrap_content" android:layout_height="36dp" android:background="@drawable/settings_item_bg" android:paddingStart="14dp" android:paddingEnd="14dp" android:gravity="center" android:text="🎮 PlayStation 5" android:textColor="#38BDF8" android:textSize="14sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- HDMI 2 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="منفذ HDMI 2:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/btnHdmi2Label" android:layout_width="wrap_content" android:layout_height="36dp" android:background="@drawable/settings_item_bg" android:paddingStart="14dp" android:paddingEnd="14dp" android:gravity="center" android:text="🍏 Apple TV" android:textColor="#38BDF8" android:textSize="14sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+
+                    <!-- HDMI 3 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/settings_inner_row_bg"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="منفذ HDMI 3:" android:textColor="#FFFFFF" android:textSize="15sp" android:fontFamily="@font/thmanyah_bold" />
+                        <TextView android:id="@+id/btnHdmi3Label" android:layout_width="wrap_content" android:layout_height="36dp" android:background="@drawable/settings_item_bg" android:paddingStart="14dp" android:paddingEnd="14dp" android:gravity="center" android:text="📡 الرسيفر الفضائي" android:textColor="#38BDF8" android:textSize="14sp" android:focusable="true" android:clickable="true" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 6. لوحة التحكم والربط بالجوال -->
+                <LinearLayout
+                    android:id="@+id/paneMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📲 التحكم والربط الذكي بالجوال"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="افتح متصفح الجوال وأنت متصل بنفس شبكة الواي فاي للتحكم الكامل:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/settings_group_card_bg"
+                        android:padding="22dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🌐 عنوان التحكم المباشر من الهاتف:"
+                            android:textColor="#F6C85F"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/thmanyah_bold" />
+
+                        <TextView
+                            android:id="@+id/tvCompanionUrl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="http://192.168.1.50:8080"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:fontFamily="@font/thmanyah_bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="الميزات المتاحة بالجوال:\n• ريموت تحكم افتراضي للأسهم وOK والرجوع والصفحة الرئيسية\n• إرسال رسائل عائلية فورية تظهر كإشعار على الشاشة («العشاء جاهز 🍲»)\n• اختيار المدينة والفريق المفضل مباشرة بنقرة زر"
+                            android:textColor="#94A3B8"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="4dp"
+                            android:fontFamily="@font/thmanyah_regular" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 7. لوحة شاشة التوقف والنظام -->
+                <LinearLayout
+                    android:id="@+id/paneSystem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="⚙️ شاشة التوقف وإعدادات النظام"
+                        android:textColor="#38BDF8"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <TextView
+                        android:id="@+id/btnTestScreensaver"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="12dp"
+                        android:text="▶ تشغيل وتجربة شاشة التوقف الآن" />
+
+                    <TextView
+                        android:id="@+id/toggleHadithWidget"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="8dp"
+                        android:text="حديث اليوم الشريف في الواجهة: مفعّل" />
+
+                    <TextView
+                        android:id="@+id/toggleSsRamadan"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="8dp"
+                        android:text="عداد رمضان المبارك: مفعّل" />
+
+                    <TextView
+                        android:id="@+id/toggleSsWeather"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="8dp"
+                        android:text="الطقس المباشر: مفعّل" />
+
+                    <TextView
+                        android:id="@+id/toggleArabicNumerals"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="8dp"
+                        android:text="أرقام الوقت والتواريخ: عربية (٠-٩) / إنجليزية (0-9)" />
+
+                    <!-- نظام الساعة والثواني -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="🕐 إعدادات الساعة والوقت:"
+                        android:textColor="#F6C85F"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/toggleClock24h" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="نظام الساعة: 12 ساعة (ص/م)" />
+                        <TextView android:id="@+id/toggleClockSeconds" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="عرض الثواني الرقمية: معطّل" />
+                    </LinearLayout>
+
+                    <!-- نص الترحيب العائلي -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="🏠 نص الترحيب العائلي بشاشة التوقف:"
+                        android:textColor="#F6C85F"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/thmanyah_bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/greetFamily" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="منزل العائلة المبارك 🌿" />
+                        <TextView android:id="@+id/greetWelcome" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="مرحباً بكم 🏠" />
+                        <TextView android:id="@+id/greetHappy" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="بيت السعادة 🤍" />
+                        <TextView android:id="@+id/greetNone" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="🚫 بدون ترحيب" />
+                    </LinearLayout>
+
+                    <!-- سرعة تدوير شريط الأخبار -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="📰 سرعة تبديل أخبار النادي:"
+                        android:textColor="#94A3B8"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/newsSpeed6" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="6 ثوانٍ" />
+                        <TextView android:id="@+id/newsSpeed10" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="10 ثوانٍ" />
+                        <TextView android:id="@+id/newsSpeed15" style="@style/SettingsColumnChoice" android:background="@drawable/settings_choice_bg" android:text="15 ثانية" />
+                        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btnCheckUpdate"
+                        style="@style/SettingsRow"
+                        android:layout_marginTop="14dp"
+                        android:text="🔄 التحقق من وجود تحديثات جديدة للواجهة" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="إعدادات نظام التلفزيون الأصلية:"
+                        android:textColor="#94A3B8"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/thmanyah_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+                        <TextView android:id="@+id/btnTvSettings" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="⚙️ إعدادات التلفاز" />
+                        <TextView android:id="@+id/btnWifiSettings" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="📶 إعدادات الشبكة" />
+                        <TextView android:id="@+id/btnHomeSettings" style="@style/SettingsColumnChoice" android:background="@drawable/settings_item_bg" android:text="🏠 الواجهة الافتراضية" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

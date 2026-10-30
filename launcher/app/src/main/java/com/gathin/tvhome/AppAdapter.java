@@ -190,6 +190,27 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /** Calmer motion for weak GPUs (config.xml, reduced_motion): no overshoot, shorter fades. */
     private final boolean reducedMotion;
     private final List<Entry> items = new ArrayList<>();
+    private final List<Entry> allItems = new ArrayList<>();
+    private String activeCategory = SmartCategory.CAT_ALL;
+
+    public void setCategory(String category) {
+        this.activeCategory = category;
+        filterItems();
+        notifyDataSetChanged();
+    }
+
+    private void filterItems() {
+        items.clear();
+        if (SmartCategory.CAT_ALL.equals(activeCategory)) {
+            items.addAll(allItems);
+        } else {
+            for (Entry e : allItems) {
+                if (e.kind == Entry.EMPTY || SmartCategory.matchesCategory(activeCategory, e.pkg, e.label)) {
+                    items.add(e);
+                }
+            }
+        }
+    }
 
     AppAdapter(Context ctx, TileListener listener, int dockSize, Config cfg) {
         this.ctx = ctx;
@@ -224,12 +245,14 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         leanbackPackages = tvPackages;
         Set<String> added = LibraryApps.load(ctx);
         Set<String> removed = LibraryApps.loadRemoved(ctx);
-        if (!added.isEmpty()) {
-            Set<String> seen = new HashSet<>(tvPackages);
-            for (ResolveInfo ri : pm.queryIntentActivities(
-                    new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)) {
-                if (ri.activityInfo != null && added.contains(ri.activityInfo.packageName)
-                        && seen.add(ri.activityInfo.packageName)) found.add(ri);
+
+        // Support MTC & Standard Android TVs: also discover standard LAUNCHER apps!
+        Set<String> seenLauncher = new HashSet<>(tvPackages);
+        for (ResolveInfo ri : pm.queryIntentActivities(
+                new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)) {
+            if (ri.activityInfo != null && !ri.activityInfo.packageName.equals(ctx.getPackageName())
+                    && seenLauncher.add(ri.activityInfo.packageName)) {
+                found.add(ri);
             }
         }
         Map<String, Cards.Card> cardByPkg = new HashMap<>();
@@ -287,8 +310,9 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             fresh.add(docked + i, new Entry(Entry.EMPTY, "", new ComponentName(ctx, "empty-dock-slot-" + i),
                     null, null, null, 0));
         }
-        items.clear();
-        items.addAll(fresh);
+        allItems.clear();
+        allItems.addAll(fresh);
+        filterItems();
         notifyDataSetChanged();
     }
 
